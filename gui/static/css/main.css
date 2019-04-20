@@ -1,0 +1,221 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('/static/fonts/icomoon.eot?c0e855');
+  src:  url('/static/fonts/icomoon.eot?c0e855#iefix') format('embedded-opentype'),
+  url('/static/fonts/icomoon.ttf?c0e855') format('truetype'),
+  url('/static/fonts/icomoon.woff?c0e855') format('woff'),
+  url('/static/fonts/icomoon.svg?c0e855#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-edit:before {
+  content: "\e905";
+}
+.icon-download:before {
+  content: "\e933";
+}
+.icon-search:before {
+  content: "\e986";
+}
+.icon-delete:before {
+  content: "\e9ac";
+}
+.icon-link:before {
+  content: "\e9cb";
+}
+.icon-circle-up:before {
+  content: "\ea41";
+}
+.icon-circle-down:before {
+  content: "\ea43";
+}
+
+.wrap {
+  position: relative;
+}
+
+.wrap .content {
+  position: absolute;
+  right: 0;
+  min-width: 400px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.wrap .content .top-bar {
+  height: 40px;
+  background: #ddd;
+}
+
+.wrap .content .content-inner {
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  padding-left: 20px;
+  display: block;
+  position: absolute;
+  height: 900px;
+  width: 100%;
+}
+
+a {
+  color: #9d9d9d;
+  text-decoration: none;
+}
+
+a.currentlink {
+  color: #FF8100;
+}
+
+.container.container {
+  width: 100%;
+  margin: auto;
+  padding: 0;
+}
+
+.table-centered th,
+.table-centered td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* horizontal wrapper for block elements */
+.wrapper-horizontal {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+}
+.wrapper-horizontal > div,
+.wrapper-horizontal > h1,
+.wrapper-horizontal > h2,
+.wrapper-horizontal > h3,
+.wrapper-horizontal > h4,
+.wrapper-horizontal > h5,
+.wrapper-horizontal > h6,
+.wrapper-horizontal > p,
+.wrapper-horizontal > form,
+.wrapper-horizontal > header,
+.wrapper-horizontal > footer,
+.wrapper-horizontal > section,
+.wrapper-horizontal > li,
+.wrapper-horizontal > ul,
+.wrapper-horizontal > ol,
+.wrapper-horizontal > table,
+.wrapper-horizontal > main,
+.wrapper-horizontal > nav,
+.wrapper-horizontal > pre,
+.wrapper-horizontal > noscript,
+.wrapper-horizontal > output,
+.wrapper-horizontal > section,
+.wrapper-horizontal > video {
+  display: inline-block;
+}
+
+/* vertical wrapper for block elements */
+.wrapper-vertical {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+}
+.wrapper-vertical > div,
+.wrapper-vertical > h1,
+.wrapper-vertical > h2,
+.wrapper-vertical > h3,
+.wrapper-vertical > h4,
+.wrapper-vertical > h5,
+.wrapper-vertical > h6,
+.wrapper-vertical > p,
+.wrapper-vertical > form,
+.wrapper-vertical > header,
+.wrapper-vertical > footer,
+.wrapper-vertical > section,
+.wrapper-vertical > li,
+.wrapper-vertical > ul,
+.wrapper-vertical > ol,
+.wrapper-vertical > table,
+.wrapper-vertical > main,
+.wrapper-vertical > nav,
+.wrapper-vertical > pre,
+.wrapper-vertical > noscript,
+.wrapper-vertical > output,
+.wrapper-vertical > section,
+.wrapper-vertical > video {
+  display: block;
+}
+
+.centered {
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+.centered > * {
+  text-align: center;
+}
+
+.edge-centered {
+  margin: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+.edge-centered > * {
+  text-align: center;
+}
+
+.equal-centered {
+  margin: auto;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.equal-centered > * {
+  text-align: center;
+}
+
+.children-align-inherit.children-align-inherit > * {
+  text-align: inherit;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+/* add to parent elem */
+.resizable {
+  overflow: hidden;
+}
+.resizable > * {
+  overflow: auto;
+  resize: both;
+}
+
+/* fix bootstrap modals when stacking */
+.modal-open.modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 9999;
+}
+
