@@ -66,6 +66,7 @@ CREATE TABLE `Club` (
   `faculty_email` varchar(255) NOT NULL,
   `norm_meeting_days` varchar(255) NOT NULL,
   `norm_meeting_time` time NOT NULL,
+  `norm_meeting_loc` varchar(255) NOT NULL,
   `picture` mediumblob,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -77,7 +78,7 @@ CREATE TABLE `Club` (
 
 LOCK TABLES `Club` WRITE;
 /*!40000 ALTER TABLE `Club` DISABLE KEYS */;
-INSERT INTO `Club` VALUES (1,'Aquaneers',1,'B','We do water stuffs','Miranda Martin','mart8115@kettering.edu','tue,thur','16:00:00',NULL);
+INSERT INTO `Club` VALUES (1,'Aquaneers',1,'B','We do water stuffs','Miranda Martin','mart8115@kettering.edu','tue,thur','16:00:00','4400-AB',NULL);
 /*!40000 ALTER TABLE `Club` ENABLE KEYS */;
 UNLOCK TABLES;
 

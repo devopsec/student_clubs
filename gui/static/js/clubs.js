@@ -2,10 +2,14 @@
 $(document).ready(function() {
     /* init datatable */
     $('#clubsTable').DataTable({
+        "lengthChange": true,
+        "ordering": true,
+        "paging": true,
+        "searching": true,
         "columnDefs": [
-            { "orderable": true, "targets": [0,3,4,5] },
-            { "orderable": false, "targets": [1,2,6,7] }
+            { "orderable": true, "targets": [1,4,5,6] },
+            { "orderable": false, "targets": [0,2,3,7,8] }
         ],
-        "order": [[ 0, 'asc' ]]
+        "order": [[ 1, 'asc' ]]
     });
 });

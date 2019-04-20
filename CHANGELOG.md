@@ -2,6 +2,23 @@
 
 
 
+### Update GUI
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Sat, 20 Apr 2019 18:53:57 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+- add necessary filtering fields for club table
+- add datatables library fonts
+- fix up some UX and start on proper formatting
+- remove extra files from previous project
+
+
+---
+
+
 ### Initial Commit
 
 > Branches Affected: master  
