@@ -2,6 +2,20 @@
 
 
 
+### Add Untracked Dir
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Sat, 20 Apr 2019 19:04:22 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+- add dir that was missed by my .gitignore last commit
+
+
+---
+
+
 ### Update GUI
 
 > Branches Affected: master  
