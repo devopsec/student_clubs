@@ -2,6 +2,19 @@
 
 
 
+### Merging login pages and forms
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Wed, 8 May 2019 09:11:51 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+
+
+---
+
+
 ### Add Untracked Dir
 
 > Branches Affected: master  

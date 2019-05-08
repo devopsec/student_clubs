@@ -1,6 +1,7 @@
 <?php
 // import db settings
 require 'include/db_config.php';
+require 'header.php';
 
 // Create connection
 $db = new mysqli($host, $username, $password, $dbname, $port)
@@ -111,9 +112,11 @@ or die("Connection to db failed: " . $db->connect_error);
           <tr class='element-row'>
             <th data-field="club_id">
               <!-- add table row button -->
-              <button id='open-ClubAdd' class='btn btn-success btn-md' data-title="Add" data-toggle="modal"
-                      data-target="#add">Add
-              </button>
+              <?PHP
+              if (!empty($_SESSION["id"])) {
+                echo "<button id='open-ClubAdd' class='btn btn-success btn-md' data-title='Add' data-toggle='modal' data-target='#add'>Add </button>";
+              }
+              ?>
             </th>
             <th data-field="club_name">Club Name</th>
             <th data-field="club_poc">Point of Contact</th>
@@ -121,13 +124,19 @@ or die("Connection to db failed: " . $db->connect_error);
             <th data-field="club_meeting_days">Meeting Days</th>
             <th data-field="club_meeting_time">Meeting Time</th>
             <th data-field="club_meeting_loc">Meeting Location</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <?PHP
+            if (!empty($_SESSION["id"])) {
+              echo "
+                    <th>Edit</th>
+                    <th>Delete</th>
+                ";
+            }
+            ?>
           </tr>
           </thead>
           <tbody>
           <?php
-          $res = $db->query("SELECT id as club_id, name as club_name, faculty_advisor as club_poc, faculty_email as club_poc_email, norm_meeting_days as club_meeting_days, norm_meeting_time as club_meeting_time, norm_meeting_loc as club_meeting_loc FROM Club");
+          $res = $db->query("SELECT id AS club_id, name AS club_name, faculty_advisor AS club_poc, faculty_email AS club_poc_email, norm_meeting_days AS club_meeting_days, norm_meeting_time AS club_meeting_time, norm_meeting_loc AS club_meeting_loc FROM Club");
           if ($res->num_rows == 0) {
             return;
           }
@@ -135,28 +144,34 @@ or die("Connection to db failed: " . $db->connect_error);
             ?>
             <tr class='element-row'>
               <td class='club_id'><?php echo $row['club_id'] ?></td>
-              <td class='club_name'><?php echo $row['club_name'] ?></td>
+              <td class='club_name'><?php echo "<a href=club-details.php?id=" . $row['club_id'] . ">" . $row['club_name'] . "</a>"; ?></td>
               <td class='club_poc'><?php echo $row['club_poc'] ?></td>
               <td class='club_poc_email'><?php echo $row['club_poc_email'] ?></td>
               <td class='club_meeting_days'><?php echo $row['club_meeting_days'] ?></td>
               <td class='club_meeting_time'><?php echo $row['club_meeting_time'] ?></td>
               <td class='club_meeting_loc'><?php echo $row['club_meeting_loc'] ?></td>
-              <td>
-                <p data-placement='top' data-toggle='tooltip' title='Edit'>
-                  <button id='open-Update' class='open-Update btn btn-primary btn-xs' data-title='Edit'
-                          data-toggle='modal' data-target='#edit'>
-                    <span class='icon-edit'></span>
-                  </button>
-                </p>
-              </td>
-              <td>
-                <p data-placement='top' data-toggle='tooltip' title='Delete'>
-                  <button id='open-Delete' class='open-Delete btn btn-danger btn-xs' data-title='Delete'
-                          data-toggle='modal' data-target='#delete'>
-                    <span class='icon-delete'></span>
-                  </button>
-                </p>
-              </td>
+              <?PHP
+              if (!empty($_SESSION["id"])) {
+                echo "<td>
+                    <p data-placement='top' data-toggle='tooltip' title='Edit'>
+                      <button id='open-Update' class='open-Update btn btn-primary btn-xs' data-title='Edit'
+                              data-toggle='modal' data-target='#edit'>
+                        <span class='icon-edit'></span>
+                      </button>
+                    </p>
+                  </td>";
+                echo "<td>
+                        <p data-placement='top' data-toggle='tooltip' title='Delete'>
+                          <button id='open-Delete' class='open-Delete btn btn-danger btn-xs' data-title='Delete'
+                                  data-toggle='modal' data-target='#delete'>
+                            <span class='icon-delete'></span>
+                          </button>
+                        </p>
+                    </td>";
+              } else {
+                echo "<td></td><td></td>";
+              }
+              ?>
             </tr>
             <?php
           }
