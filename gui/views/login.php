@@ -1,3 +1,11 @@
+<?php
+// import settings
+require_once 'include/db_config.php';
+
+// session settings
+session_start();
+?>
+
 <html>
 <form action='' method='POST'>
   <table>
@@ -21,23 +29,26 @@
 if (!isset($_POST["submit"])) {
   die();
 }
-$con = mysqli_connect("localhost", "cs461", "461Club", "CS461");
-if (!$con) {
+
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);
+if (!$conn) {
   die('Could not connect: ' . mysql_error());
 }
-$email = mysqli_escape_string($con, $_POST["email"]);
-$password = mysqli_escape_string($con, $_POST["password"]);
+
+$email = mysqli_escape_string($conn, $_POST["email"]);
+$password = mysqli_escape_string($conn, $_POST["password"]);
 $sql = "Select id,name from User where email='$email' AND password=SHA2('$password',512);";
-if (!($query = mysqli_query($con, $sql))) {
-  die('Error: ' . mysqli_error($con));
+if (!($query = mysqli_query($conn, $sql))) {
+  die('Error: ' . mysqli_error($conn));
 }
+
 if (mysqli_num_rows($query) == 1) {
-  session_start();
   $result = mysqli_fetch_array($query);
   $_SESSION['name'] = $result["name"];
   $_SESSION['id'] = $result["id"];
-  header("Location: clubs.php");
-} else {
+  header("Location: /views/clubs.php");
+}
+else {
   echo "Login Failed";
 }
 

@@ -116,4 +116,15 @@ $('.modal').on('shown.bs.modal', function() {
   $(this).find('[autofocus]').focus();
 });
 
-
+/* handle drop-down menus */
+$('.dropdown-toggle').on('click', function() {
+  var self = $(this);
+  if (! self.attr('active')) {
+    self.find('.dropdown-menu').css('display', 'block');
+    self.attr('active', true)
+  }
+  else {
+    self.find('.dropdown-menu').css('display', 'none');
+    self.removeAttr('active')
+  }
+});

@@ -1,14 +1,21 @@
-<?PHP
-require 'include/db_config.php';
-require 'header.php';
+<?php
+// import settings
+require_once 'include/db_config.php';
+require_once 'include/template_engine.php';
+
+// create connection
+$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT)
+or die("Connection to db failed: " . $db->connect_error);
+
+// session settings
+session_start();
+
 if ($_SESSION["id"] != 1) {
   echo "<br>You must be logged in as an administrator to view this page";
   die();
 }
-
-$db = new mysqli($host, $username, $password, $dbname, $port)
-or die("Connection to db failed: " . $db->connect_error);
 ?>
+
   <head>
 
     <!-- title and general meta -->
@@ -20,6 +27,7 @@ or die("Connection to db failed: " . $db->connect_error);
     <!-- css libraries and styles -->
     <link rel="stylesheet" href="/static/css/bootstrap.css">
     <link rel="stylesheet" href="/static/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="/static/css/fa.css">
     <link rel="stylesheet" href="/static/css/datatables.min.css">
     <link rel="stylesheet" href="/static/css/highlight/github.css">
     <link rel="stylesheet" href="/static/css/main.css">
@@ -45,6 +53,40 @@ or die("Connection to db failed: " . $db->connect_error);
 
     <!-- header content -->
     <header>
+      <nav class="nav-bar navbar-inverse wrapper-horizontal" role="navigation">
+        <div>
+          <a class="navbar-brand" href="#">
+            <img src="/static/images/bulldog.svg" alt="bulldog">
+          </a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown movable">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+              <?php if (empty($_SESSION["id"])) {
+                echo "Guest";
+              }
+              else {
+                echo $_SESSION["name"];
+              } ?>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+              <!-- <li><a href="#"><span class="fa fa-user"></span>My Profile</a></li>
+              <li><a href="#"><span class="fa fa-gear"></span>Settings</a></li> -->
+              <li class="divider"></li>
+              <li>
+                <?php if (!empty($_SESSION["id"])): ?>
+                  <a href="/views/logout.php"><span class="fa fa-power-off"></span>Logout</a>
+                <?php else: ?>
+                  <a href="/views/login.php"><span class="fa fa-power-off"></span>Login</a>
+                <?php endif; ?>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
       <div class="top-bar hidden centered">
         <div class="message-bar"></div>
       </div>
@@ -163,9 +205,9 @@ or die("Connection to db failed: " . $db->connect_error);
           </tbody>
         </table>
       </div>
-  </div>
 
-  </section>
+    </section>
+  </div>
 
   <!-- footer content -->
   <!-- not used yet -->
@@ -175,37 +217,8 @@ or die("Connection to db failed: " . $db->connect_error);
     </div>
   </footer>
 
-  <!-- edit modal -->
-  <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="Edit" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!--              {% block edit_modal %}-->
-        <!--              {% endblock %}-->
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-
-  <!-- add modal -->
-  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="Add" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!--              {% block add_modal %}-->
-        <!--              {% endblock %}-->
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-
-  <!-- delete modal -->
-  <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="Delete" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <!--              {% block delete_modal %}-->
-        <!--              {% endblock %}-->
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-
-  </div>
+  <!-- interactive modals -->
+  <!-- TODO: copy from clubs.php and update values for this table -->
 
   <script src="/static/js/jquery.js"></script>
   <script src="/static/js/bootstrap.js"></script>

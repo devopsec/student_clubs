@@ -2,6 +2,19 @@
 
 
 
+### Add new features
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Sun, 12 May 2019 16:27:22 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+
+
+---
+
+
 ### Merging login pages and forms
 
 > Branches Affected: master  

@@ -4,10 +4,12 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require 'include/db_config.php';
-require 'header.php';
 
-$db = new mysqli($host, $username, $password, $dbname, $port)
+$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT)
 or die("Connection to db failed: " . $db->connect_error);
+
+// session settings
+session_start();
 
 $club_id = $_GET["id"];
 
