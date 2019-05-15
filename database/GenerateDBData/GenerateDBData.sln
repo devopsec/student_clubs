@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateMySqlData", "GenerateMySqlData\GenerateMySqlData.csproj", "{61DB80F4-8FD8-4E6A-B474-E3A35749D69F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateSQLiteData", "GenerateSQLiteData\GenerateSQLiteData.csproj", "{5D2A385C-BC0F-46A4-A029-462D61E510BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{61DB80F4-8FD8-4E6A-B474-E3A35749D69F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61DB80F4-8FD8-4E6A-B474-E3A35749D69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61DB80F4-8FD8-4E6A-B474-E3A35749D69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61DB80F4-8FD8-4E6A-B474-E3A35749D69F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2A385C-BC0F-46A4-A029-462D61E510BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2A385C-BC0F-46A4-A029-462D61E510BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2A385C-BC0F-46A4-A029-462D61E510BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2A385C-BC0F-46A4-A029-462D61E510BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
