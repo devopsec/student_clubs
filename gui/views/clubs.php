@@ -9,6 +9,39 @@ or die("Connection to db failed: " . $db->connect_error);
 
 // session settings
 session_start();
+
+/* TODO: finish form handling */
+// form handler
+//if ($_POST && isset($_POST['rowid'])) {
+//  if ($_POST['action'] === 'add') {
+//    $res = $db->query("INSERT INTO Club VALUES (" .
+//      "NULL," .
+//      $_POST['club_name'] . "," .
+//      $_POST['president'] . ',' .
+//      $_POST['section'] . ',' .
+//      $_POST['description'] . ',' .
+//      $_POST['faculty_advisor'] . ',' .
+//      $_POST['faculty_email'] . ',' .
+//      $_POST['norm_meeting_days'] . ',' .
+//      $_POST['norm_meeting_time'] . ',' .
+//      $_POST['norm_meeting_loc'] . ',' .
+//      $_POST['picture']. ')'
+//    );
+//
+//    header("Location: views/clubs.php");
+//    exit;
+//  }
+//  elseif ($_POST['action'] === 'edit') {
+//
+//    header("Location: views/clubs.php");
+//    exit;
+//  }
+//  elseif ($_POST['action'] === 'delete') {
+//
+//    header("Location: views/clubs.php");
+//    exit;
+//  }
+//}
 ?>
 
   <html lang="en">
@@ -99,43 +132,6 @@ session_start();
         <!-- table title -->
         <div class="wrapper-horizontal edge-centered">
           <h4>Kettering Student Organizations</h4>
-        </div>
-
-        <!-- table filters -->
-        <!-- TODO: integrate these into datatables library as components -->
-        <div class="wrapper-horizontal edge-centered">
-
-          <!-- section filter dropdown -->
-          <div id="sectionFilter">
-            <label>Section:
-              <select>
-                <option value="A">A</option>
-                <option value="B">B</option>
-              </select>
-            </label>
-          </div>
-
-          <!-- day filter radio buttons -->
-          <div id="dayFilter">
-            <label>Day:
-              <label class="radio-inline">
-                <input type="radio" name="monday" checked>M
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="tuesday" checked>T
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="wednesday" checked>W
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="thursday" checked>Th
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="friday" checked>F
-              </label>
-            </label>
-          </div>
-
         </div>
 
       </div>

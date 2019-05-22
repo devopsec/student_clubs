@@ -18,8 +18,37 @@ $(document).ready(function() {
             { "orderable": true, "targets": [1,4,5,6] },
             { "orderable": false, "targets": [0,2,3,7,8] }
         ],
-        "order": [[ 1, 'asc' ]]
+        "order": [[ 1, 'asc' ]],
+        "dom": '<"wrapper-horizontal edge-centered"l<"#sectionFilter"><"#dayFilter">fr><t><"wrapper-horizontal edge-centered"ip>',
+        fnInitComplete: function() {
+            $('#sectionFilter').html('<label>Section:\n' +
+                '  <select>\n' +
+                '    <option value="A">A</option>\n' +
+                '    <option value="B">B</option>\n' +
+                '  </select>\n' +
+                '</label>');
+            $('#dayFilter').html('<label>Day:\n' +
+                '  <label class="radio-inline">\n' +
+                '    <input type="checkbox" name="monday" checked>M\n' +
+                '  </label>\n' +
+                '  <label class="radio-inline">\n' +
+                '    <input type="checkbox" name="tuesday" checked>T\n' +
+                '  </label>\n' +
+                '  <label class="radio-inline">\n' +
+                '    <input type="checkbox" name="wednesday" checked>W\n' +
+                '  </label>\n' +
+                '  <label class="radio-inline">\n' +
+                '    <input type="checkbox" name="thursday" checked>Th\n' +
+                '  </label>\n' +
+                '  <label class="radio-inline">\n' +
+                '    <input type="checkbox" name="friday" checked>F\n' +
+                '  </label>\n' +
+                '</label>');
+        }
     });
+
+    /* datatable custom elements */
+
 
     /* handle clearing and updating modal data */
     $('#open-Add').click(function() {

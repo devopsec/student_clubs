@@ -10,7 +10,8 @@
       </div>
 
       <div class="modal-body">
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" role="form">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" role="form">
+          <input type="hidden" name="action" value="add">
           <input class="row_id" type="hidden" name="row_id">
 
           <?php echo $add_form_body; ?>
@@ -39,7 +40,8 @@
       </div>
 
       <div class="modal-body">
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" role="form">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" role="form">
+          <input type="hidden" name="action" value="edit">
           <input class="row_id" type="hidden" name="row_id">
 
           <?php echo $edit_form_body; ?>
@@ -68,7 +70,8 @@
       </div>
 
       <div class="modal-body">
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" role="form">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" role="form">
+          <input type="hidden" name="action" value="delete">
           <input class="row_id" type="hidden" name="row_id">
 
           <div class="alert alert-danger">
@@ -104,7 +107,7 @@
       </div>
 
       <div class="modal-body">
-        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST" role="form" enctype="multipart/form-data">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" role="form" enctype="multipart/form-data">
           <input class="row_id " type="hidden" name="row_id">
 
           <div class="form-group">
