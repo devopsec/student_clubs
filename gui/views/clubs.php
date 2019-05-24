@@ -1,4 +1,8 @@
 <?php
+// php settings
+ini_set('file_uploads', 1);
+error_reporting(E_ALL);
+
 // import settings
 require_once 'include/db_config.php';
 require_once 'include/template_engine.php';
@@ -10,47 +14,55 @@ or die("Connection to db failed: " . $db->connect_error);
 // session settings
 session_start();
 
+try {
+  print_r($_POST);
+}
+catch (Exception $e) {
+  true;
+}
+
 /* TODO: finish form handling */
 // form handler
-//if ($_POST && isset($_POST['rowid'])) {
-//  if ($_POST['action'] === 'add') {
-//    $res = $db->query("INSERT INTO Club VALUES (" .
-//      "NULL," .
-//      $_POST['club_name'] . "," .
-//      $_POST['president'] . ',' .
-//      $_POST['section'] . ',' .
-//      $_POST['description'] . ',' .
-//      $_POST['faculty_advisor'] . ',' .
-//      $_POST['faculty_email'] . ',' .
-//      $_POST['norm_meeting_days'] . ',' .
-//      $_POST['norm_meeting_time'] . ',' .
-//      $_POST['norm_meeting_loc'] . ',' .
-//      $_POST['picture']. ')'
-//    );
-//
-//    header("Location: views/clubs.php");
-//    exit;
-//  }
-//  elseif ($_POST['action'] === 'edit') {
-//
-//    header("Location: views/clubs.php");
-//    exit;
-//  }
-//  elseif ($_POST['action'] === 'delete') {
-//
-//    header("Location: views/clubs.php");
-//    exit;
-//  }
-//}
+if ($_POST && isset($_POST['rowid'])) {
+
+  if ($_POST['action'] === 'add') {
+    $res = $db->query("INSERT INTO Club VALUES (" .
+        "NULL," .
+        $_POST['club_name'] . "," .
+        $_POST['club_president'] . ',' .
+        $_POST['club_section'] . ',' .
+        $_POST['club_description'] . ',' .
+        $_POST['club_poc'] . ',' .
+        $_POST['club_poc_email'] . ',' .
+        $_POST['club_meeting_days'] . ',' .
+        $_POST['club_meeting_time'] . ',' .
+        $_POST['club_meeting_loc'] . ',' .
+        $_POST['club_picture'] . ')'
+    );
+
+    header("Location: views/clubs.php");
+    exit;
+  }
+  elseif ($_POST['action'] === 'edit') {
+
+    header("Location: views/clubs.php");
+    exit;
+  }
+  elseif ($_POST['action'] === 'delete') {
+
+    header("Location: views/clubs.php");
+    exit;
+  }
+}
 ?>
 
   <html lang="en">
   <head>
 
     <!-- title and general meta -->
-    <title>Kettering Student Organizations</title>
+    <title>Kettering Student Clubs</title>
     <meta charset="utf-8">
-    <meta name="description" content="Organizations and Clubs orgranized by Kettering University students.">
+    <meta name="description" content="Organizations and Clubs organized by Kettering University students.">
     <meta name="keywords" content="organizations,clubs,student,kettering,groups,university">
 
     <!-- css libraries and styles -->
@@ -138,11 +150,10 @@ session_start();
 
       <br>
       <div class="clearfix"></div>
-      <br>
 
       <!-- table data -->
       <div class="table-responsive">
-        <table id="clubsTable" class="table table-striped table-centered">
+        <table id="clubsTable" class="table table-striped table-centered table-hover">
 
           <thead>
           <tr class='element-row'>
@@ -171,6 +182,7 @@ session_start();
           </tr>
           </thead>
           <tbody>
+
           <?php
           $res = $db->query("SELECT id AS club_id, name AS club_name, faculty_advisor AS club_poc, faculty_email AS club_poc_email, norm_meeting_days AS club_meeting_days, norm_meeting_time AS club_meeting_time, norm_meeting_loc AS club_meeting_loc FROM Club");
           if ($res->num_rows == 0) {
@@ -178,6 +190,7 @@ session_start();
           }
           while ($row = $res->fetch_assoc()) {
             ?>
+
             <tr class='element-row'>
               <td class='club_id'><?php echo $row['club_id'] ?></td>
               <td class='club_name'><?php echo "<a href=club-details.php?id=" . $row['club_id'] . ">" . $row['club_name'] . "</a>"; ?></td>
@@ -230,9 +243,39 @@ session_start();
   <?php
   $template = new Template('templates/modals.php');
 
+  $pres_option_tags = '';
+  $res = $db->query("SELECT t2.id AS user_id,t2.name AS president_name FROM Officers t1, User t2 WHERE t1.user_id = t2.id AND t1.position = 'president'");
+  if ($res->num_rows !== 0) {
+  while ($row = $res->fetch_assoc()) {
+      $pres_option_tags .= '<option value="' . $row['user_id'] . '">' . $row['president_name'] . '</option>\n';
+    }
+  }
+  $res->free();
+
   $template->set('add_form_body', '
     <div class="form-group">
-      <input class="form-control club_name" type="text" name="club_name" placeholder="Club Name">
+      <input class="form-control club_name" type="text" name="club_name" placeholder="Club Name" autofocus>
+    </div>
+    
+    <div class="form-group">
+      <label>Club President:
+        <select name="club_president">' .
+          $pres_option_tags .
+        '</select>
+      </label>
+    </div>
+    
+    <div class="form-group">
+      <label>Section:
+        <select name="club_section">
+          <option value="A">A</option>
+          <option value="B">B</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <input class="form-control club_description" type="text" name="club_description" placeholder="Club Description">
     </div>
     
     <div class="form-group">
@@ -246,20 +289,20 @@ session_start();
     <div class="form-group">
       <div class="club_meeting_days">
         <label>Meeting Days:
-          <label class="radio-inline">
-            <input type="radio" name="monday">M
+          <label class="checkbox-inline">
+            <input type="checkbox" name="monday">M
           </label>
-          <label class="radio-inline">
-            <input type="radio" name="tuesday">T
+          <label class="checkbox-inline">
+            <input type="checkbox" name="tuesday">T
           </label>
-          <label class="radio-inline">
-            <input type="radio" name="wednesday">W
+          <label class="checkbox-inline">
+            <input type="checkbox" name="wednesday">W
           </label>
-          <label class="radio-inline">
-            <input type="radio" name="thursday">Th
+          <label class="checkbox-inline">
+            <input type="checkbox" name="thursday">Th
           </label>
-          <label class="radio-inline">
-            <input type="radio" name="friday">F
+          <label class="checkbox-inline">
+            <input type="checkbox" name="friday">F
           </label>
         </label>
       </div>
@@ -271,6 +314,10 @@ session_start();
     
     <div class="form-group">
       <input class="form-control club_meeting_loc" type="text" name="club_meeting_loc" placeholder="Meeting Location">
+    </div>
+    
+    <div class="form-group">
+      <input class="form-control club_picture" type="file" name="club_picture">
     </div>
   ');
 
@@ -290,20 +337,20 @@ session_start();
       <div class="form-group">
         <div class="club_meeting_days">
           <label>Meeting Days:
-            <label class="radio-inline">
-              <input type="radio" name="monday">M
+            <label class="checkbox-inline">
+              <input type="checkbox" name="monday">M
             </label>
-            <label class="radio-inline">
-              <input type="radio" name="tuesday">T
+            <label class="checkbox-inline">
+              <input type="checkbox" name="tuesday">T
             </label>
-            <label class="radio-inline">
-              <input type="radio" name="wednesday">W
+            <label class="checkbox-inline">
+              <input type="checkbox" name="wednesday">W
             </label>
-            <label class="radio-inline">
-              <input type="radio" name="thursday">Th
+            <label class="checkbox-inline">
+              <input type="checkbox" name="thursday">Th
             </label>
-            <label class="radio-inline">
-              <input type="radio" name="friday">F
+            <label class="checkbox-inline">
+              <input type="checkbox" name="friday">F
             </label>
           </label>
         </div>

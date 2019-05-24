@@ -2,6 +2,23 @@
 
 
 
+### Current work on GUI
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Fri, 24 May 2019 12:27:38 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+- make login page pretty
+- add fliters to datatables library
+- add current work for handling forms
+- add current for sql queries
+
+
+---
+
+
 ### Add widgets to datatables library
 
 > Branches Affected: master  

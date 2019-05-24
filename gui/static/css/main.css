@@ -246,3 +246,11 @@ a.currentlink {
   z-index: 9999;
 }
 
+.table-responsive {
+  border: 3px double #565656;
+  padding: 1%;
+}
+
+.table-responsive table {
+  padding: 1% 0 1% 0;
+}

@@ -10,13 +10,13 @@
       </div>
 
       <div class="modal-body">
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" role="form">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" role="form" enctype="multipart/form-data">
           <input type="hidden" name="action" value="add">
           <input class="row_id" type="hidden" name="row_id">
 
           <?php echo $add_form_body; ?>
 
-          <div class="modal-footer ">
+          <div class="modal-footer">
             <button type="submit" class="btn btn-success btn-lg" style="width: 100%;"><span
                   class="glyphicon glyphicon-ok-sign"></span> Add
             </button>
@@ -40,7 +40,7 @@
       </div>
 
       <div class="modal-body">
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" role="form">
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST" role="form" enctype="multipart/form-data">
           <input type="hidden" name="action" value="edit">
           <input class="row_id" type="hidden" name="row_id">
 

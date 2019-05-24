@@ -1,0 +1,59 @@
+div.login-wrapper {
+  height:100%;
+}
+
+form.login {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.form-body {
+  margin: 20px 0 20px 0;
+}
+
+form.login input {
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+}
+
+form.login input[type='submit'] {
+  cursor: pointer;
+}
+
+form.login input[type='email'],
+form.login input[type='password'] {
+  width: 100%;
+}
+
+form.login {
+  background-color: #eaeaea;
+  padding: 1%;
+  border: 2px solid #11aabb;
+  border-radius: 5px;
+}
+
+form.login input[type='email'],
+form.login input[type='password'] {
+  border: 1px solid #d6fcd7;
+  padding: 5px 5px;
+}
+
+form.login input:focus,
+form.login input:hover {
+  border-color: #6dff70;
+  -webkit-transition: border .3s ease-in;
+  -o-transition: border .3s ease-in;
+  transition: border .3s ease-in;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-transition: color 0.3s;
+  -o-transition: color 0.3s;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #11aabb;
+}

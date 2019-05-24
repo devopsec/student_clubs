@@ -22,25 +22,25 @@ $(document).ready(function() {
         "dom": '<"wrapper-horizontal edge-centered"l<"#sectionFilter"><"#dayFilter">fr><t><"wrapper-horizontal edge-centered"ip>',
         fnInitComplete: function() {
             $('#sectionFilter').html('<label>Section:\n' +
-                '  <select>\n' +
+                '  <select class="form-control input-sm">\n' +
                 '    <option value="A">A</option>\n' +
                 '    <option value="B">B</option>\n' +
                 '  </select>\n' +
                 '</label>');
             $('#dayFilter').html('<label>Day:\n' +
-                '  <label class="radio-inline">\n' +
+                '  <label class="checkbox-inline">\n' +
                 '    <input type="checkbox" name="monday" checked>M\n' +
                 '  </label>\n' +
-                '  <label class="radio-inline">\n' +
+                '  <label class="checkbox-inline">\n' +
                 '    <input type="checkbox" name="tuesday" checked>T\n' +
                 '  </label>\n' +
-                '  <label class="radio-inline">\n' +
+                '  <label class="checkbox-inline">\n' +
                 '    <input type="checkbox" name="wednesday" checked>W\n' +
                 '  </label>\n' +
-                '  <label class="radio-inline">\n' +
+                '  <label class="checkbox-inline">\n' +
                 '    <input type="checkbox" name="thursday" checked>Th\n' +
                 '  </label>\n' +
-                '  <label class="radio-inline">\n' +
+                '  <label class="checkbox-inline">\n' +
                 '    <input type="checkbox" name="friday" checked>F\n' +
                 '  </label>\n' +
                 '</label>');
