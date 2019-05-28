@@ -13,6 +13,7 @@ session_start();
 
 $club_id = $_GET["id"];
 
+//updated SQL query
 $res = $db->query("SELECT id as club_id, name as club_name, faculty_advisor as club_poc, faculty_email as club_poc_email, norm_meeting_days as club_meeting_days, norm_meeting_time as club_meeting_time, norm_meeting_loc as club_meeting_loc, description, (Select U.name from User U where U.id=C.president) as president, picture FROM Club C WHERE id=$club_id");
 while ($row = $res->fetch_assoc()) {
   ?>
