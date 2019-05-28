@@ -2,6 +2,79 @@
 
 
 
+### Modified sql query that populates club rows Point of contact pulls president's info now, rather than advisor Edit and delete button will only appear for the president of a club and the admin
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 17:48:32 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+
+
+---
+
+
+### Update club-details.php
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 15:45:56 -0400  
+> Author: thetechnician94 (94tylercraig@gmail.com)  
+> Committer: thetechnician94 (94tylercraig@gmail.com)  
+
+SQL query updated in previous commit.
+resolves #7
+
+
+---
+
+
+### Update logout.php
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 14:22:51 -0400  
+> Author: thetechnician94 (94tylercraig@gmail.com)  
+> Committer: thetechnician94 (94tylercraig@gmail.com)  
+
+logout.php to go to new landing page
+
+
+---
+
+
+### President Name
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 13:49:01 -0400  
+> Author: thetechnician94 (94tylercraig@gmail.com)  
+> Committer: thetechnician94 (94tylercraig@gmail.com)  
+
+Club president shows name instead of ID
+
+
+---
+
+
+### Landing Page
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 13:30:33 -0400  
+> Author: thetechnician94 (94tylercraig@gmail.com)  
+> Committer: thetechnician94 (94tylercraig@gmail.com)  
+
+Changed index to be landing page.
+Created background image.
+Stylized Buttons
+Needs work still
+
+
+---
+
+
 ### Current work on GUI
 
 > Branches Affected: master  
