@@ -184,7 +184,9 @@ if ($_POST && isset($_POST['rowid'])) {
           <tbody>
 
           <?php
-          $res = $db->query("SELECT id AS club_id, name AS club_name, faculty_advisor AS club_poc, faculty_email AS club_poc_email, norm_meeting_days AS club_meeting_days, norm_meeting_time AS club_meeting_time, norm_meeting_loc AS club_meeting_loc FROM Club");
+          $res = $db->query("SELECT c.id AS club_id, c.name AS club_name, u.id as president_id, u.name AS club_poc, u.email AS club_poc_email,
+								norm_meeting_days AS club_meeting_days, norm_meeting_time AS club_meeting_time, norm_meeting_loc AS club_meeting_loc
+							FROM Club c LEFT JOIN  User u on c.president = u.id");
           if ($res->num_rows == 0) {
             return;
           }
@@ -200,7 +202,7 @@ if ($_POST && isset($_POST['rowid'])) {
               <td class='club_meeting_time'><?php echo $row['club_meeting_time'] ?></td>
               <td class='club_meeting_loc'><?php echo $row['club_meeting_loc'] ?></td>
               <?PHP
-              if (!empty($_SESSION["id"])) {
+              if (!empty($_SESSION["id"]) and ($_SESSION["id"] == $row['president_id'] or $_SESSION["id"] == 1)) {
                 echo "<td>
                     <button id='open-Update' class='open-Update btn btn-primary btn-xs' title='Edit Row'
                             data-toggle='modal' data-target='#edit'>
