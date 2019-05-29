@@ -93,11 +93,12 @@ footer .bottom-bar {
   background: #ddd;
 }
 th{
-	color: white
+	color: white;
+	text-shadow: #34282C 2px 1px 3px;
 }
 .filter-header{
-	color: charcoal;
-	font-weight: bold;
+	color: white;
+	text-shadow: #34282C 2px 1px 5px;
 }
 body
 {
@@ -105,8 +106,11 @@ body
 	min-height:200px;
 	
 }
+
 h4{
 	color: white;
+	font-size:24px;
+	text-shadow: #34282C 2px 1px 5px;
 }
 section {
   padding-left: 10px;
