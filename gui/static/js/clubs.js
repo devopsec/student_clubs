@@ -19,7 +19,7 @@ $(document).ready(function() {
             { "orderable": false, "targets": [0,2,3,7,8] }
         ],
         "order": [[ 1, 'asc' ]],
-        "dom": '<"wrapper-horizontal edge-centered"l<"#sectionFilter"><"#dayFilter">fr><t><"wrapper-horizontal edge-centered"ip>',
+        "dom": '<"wrapper-horizontal edge-centered filter-header"l<"#sectionFilter"><"#dayFilter">fr><t><"wrapper-horizontal edge-centered"ip>',
         fnInitComplete: function() {
             $('#sectionFilter').html('<label>Section:\n' +
                 '  <select class="form-control input-sm">\n' +

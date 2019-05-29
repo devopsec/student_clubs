@@ -14,12 +14,12 @@ or die("Connection to db failed: " . $db->connect_error);
 // session settings
 session_start();
 
-try {
+/*try {
   print_r($_POST);
 }
 catch (Exception $e) {
   true;
-}
+}*/
 
 /* TODO: finish form handling */
 // form handler
@@ -143,7 +143,7 @@ if ($_POST && isset($_POST['rowid'])) {
 
         <!-- table title -->
         <div class="wrapper-horizontal edge-centered">
-          <h4>Kettering Student Organizations</h4>
+          <h4 style="Color:white">Kettering Student Organizations</h4>
         </div>
 
       </div>

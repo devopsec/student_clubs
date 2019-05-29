@@ -92,7 +92,22 @@ footer .bottom-bar {
   height: 40px;
   background: #ddd;
 }
-
+th{
+	color: white
+}
+.filter-header{
+	color: charcoal;
+	font-weight: bold;
+}
+body
+{
+	background: #2251f3 url("/static/images/bulldog-bg.png") no-repeat top right;
+	min-height:200px;
+	
+}
+h4{
+	color: white;
+}
 section {
   padding-left: 10px;
   padding-right: 10px;
