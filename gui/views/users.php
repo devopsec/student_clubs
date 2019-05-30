@@ -12,6 +12,7 @@ session_start();
 
 if ($_SESSION["id"] != 1) {
   echo "<br>You must be logged in as an administrator to view this page";
+  header("Location: forbidden.html");
   die();
 }
 ?>

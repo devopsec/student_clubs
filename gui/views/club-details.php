@@ -10,13 +10,19 @@ or die("Connection to db failed: " . $db->connect_error);
 
 // session settings
 session_start();
-
+?>
+<head>
+	<link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+ <?PHP
 $club_id = $_GET["id"];
 
 //updated SQL query
 $res = $db->query("SELECT id as club_id, name as club_name, faculty_advisor as club_poc, faculty_email as club_poc_email, norm_meeting_days as club_meeting_days, norm_meeting_time as club_meeting_time, norm_meeting_loc as club_meeting_loc, description, (Select U.name from User U where U.id=C.president) as president, picture FROM Club C WHERE id=$club_id");
 while ($row = $res->fetch_assoc()) {
   ?>
+  
   <h1><?php echo $row['club_name'] ?> </h1>
   <img src="<?php echo $row['picture'] ?>" alt="Club Image"/>
   <table border='1' style="border-collapse: collapse">
@@ -50,10 +56,10 @@ while ($row = $res->fetch_assoc()) {
     Club Description:<br>
     <?php echo $row['description'] ?>
   </p>
-
   <?php
 }
 $res->free();
 ?>
+</body>
 
 
