@@ -21,33 +21,29 @@ or die("Connection to db failed: " . $db->connect_error);
 session_start();
 
 /* DEBUG: */
-try {
-  echo "<script>console.log('|=========== REQUEST ===========|')</script>";
-  echo "<script>console.log(" . json_encode($_REQUEST) . ")</script>";
+//  echo "<script>console.log('|=========== REQUEST ===========|')</script>";
+//  echo "<script>console.log(" . json_encode($_REQUEST) . ")</script>";
   echo "<script>console.log('|=========== POST ===========|')</script>";
   echo "<script>console.log(" . json_encode($_POST) . ")</script>";
   echo "<script>console.log('|=========== FILES ===========|')</script>";
   echo "<script>console.log(" . json_encode($_FILES) . ")</script>";
-}
-catch (Exception $e) {
-  echo "<script>console.error('[ERR]: " . print_r($e, true) . "')</script>";
-}
 
 /* TODO: finish form handling */
 // form handler
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
   if ($_POST['action'] === 'add') {
+
     /*
     TODO: this is very inefficient as more files are uploaded
     we should run this at startup and then track the state across the server
     */
     /* get the next available upload name (incremental) */
-    $image_filenames = glob(UPLOADS_FILE_PATH . "/images/*");
+    $image_filenames = glob(UPLOADS_FILE_PATH . "*");
     $next_image_num = max(preg_replace("|[^0-9]|", "", $image_filenames)) + 1;
-    $upload_name = $next_image_num . "'" . pathinfo($_FILES['club_picture']['name'])['extension'];
+    $filename = $next_image_num . "." . pathinfo($_FILES['club_picture']['name'])['extension'];
+    $upload_name = UPLOADS_URL_PATH . $filename;
 
-    $res = $db->query("INSERT INTO Club VALUES (" .
+    $sql = "INSERT INTO Club VALUES (" .
         "NULL," .
         "'" . $_POST['club_name'] . "'" . "," .
         "'" . $_POST['club_president'] . "'" . "," .
@@ -58,18 +54,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "'" . $_POST['club_meeting_days'] . "'" . "," .
         "'" . $_POST['club_meeting_time'] . "'" . "," .
         "'" . $_POST['club_meeting_loc'] . "'" . "," .
-        "'" . $upload_name . "')"
-    );
+        "'" . $upload_name . "')";
 
+    echo "<script>console.log('[SQL]: ' . $sql)</script>";
+
+    $res = $db->query($sql);
     if ($res === TRUE) {
       echo "<script>console.log('[OK]: Record created successfully')</script>";
+      move_uploaded_file($_FILES['club_picture']['tmp_name'], UPLOADS_FILE_PATH . $filename);
     }
     else {
-      echo "<script>console.error('[ERR]: " . $db->error . "')</script>";
+      echo "<script>console.error('[ERR]: " . json_encode($db->error) . "')</script>";
     }
 
-    //header("Location: /views/clubs.php");
-    //exit;
   }
   elseif ($_POST['action'] === 'edit') {
     if (isset($_POST['rowid'])) {
@@ -78,13 +75,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>console.log('[OK]: Record updated successfully')</script>";
       }
       else {
-        echo "<script>console.error('[ERR]: " . $db->error . "')</script>";
+        echo "<script>console.error('[ERR]: " . json_encode($db->error) . "')</script>";
       }
 
       $res->free();
 
-      header("Location: views/clubs.php");
-      exit;
     }
   }
   elseif ($_POST['action'] === 'delete') {
@@ -94,13 +89,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>console.log('[OK]: Record deleted successfully')</script>";
       }
       else {
-        echo "<script>console.error('[ERR]: " . $db->error . "')</script>";
+        echo "<script>console.error('[ERR]: " . json_encode($db->error) . "')</script>";
       }
 
       $res->free();
 
-      header("Location: views/clubs.php");
-      exit;
     }
   }
 
@@ -148,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header>
       <nav class="nav-bar navbar-inverse wrapper-horizontal" role="navigation">
         <div>
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/views/clubs.php">
             <img src="/static/images/bulldog.svg" alt="bulldog">
           </a>
         </div>
@@ -167,6 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul class="dropdown-menu" role="menu">
               <!-- TODO: allow non admin users to edit their profile (parts of it) -->
               <li><a href="#"><span class="fa fa-user"></span>My Profile</a></li>
+              <li><a href="/views/users.php"><span class="fas fa-users-cog"></span> My Users</a></li>
               <!-- TODO: add display settings page -->
               <!-- <li><a href="#"><span class="fa fa-gear"></span>Settings</a></li> -->
               <li class="divider"></li>
@@ -250,59 +244,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             c.description as club_description, u.name AS club_poc, u.email AS club_poc_email, norm_meeting_days AS club_meeting_days, 
             norm_meeting_time AS club_meeting_time, norm_meeting_loc AS club_meeting_loc, c.picture as club_picture
             FROM Club c LEFT JOIN  User u on c.president = u.id");
-          if ($res->num_rows == 0) {
-            return;
-          }
-          while ($row = $res->fetch_assoc()) {
-            ?>
+          if ($res->num_rows != 0) {
+            while ($row = $res->fetch_assoc()) {
+              ?>
 
-            <tr class='element-row'>
-              <td class='club_id'><?php echo $row['club_id'] ?></td>
-              <td class='club_name'><?php echo "<a href=club-details.php?id=" . $row['club_id'] . ">" . $row['club_name'] . "</a>"; ?></td>
-              <td class="club_president hidden"><?php echo $row['president_id'] ?></td>
-              <td class="club_section hidden"><?php echo $row['club_section'] ?></td>
-              <td class="club_description hidden"><?php echo $row['club_description'] ?></td>
-              <td class='club_poc'><?php echo $row['club_poc'] ?></td>
-              <td class='club_poc_email'><?php echo $row['club_poc_email'] ?></td>
-              <td class='club_meeting_days'><?php echo $row['club_meeting_days'] ?></td>
-              <td class='club_meeting_time'><?php echo $row['club_meeting_time'] ?></td>
-              <td class='club_meeting_loc'><?php echo $row['club_meeting_loc'] ?></td>
-              <th class="club_picture hidden"><?php echo $row['club_picture'] ?></th>
-              <?PHP
-              if (!empty($_SESSION["id"])) {
+              <tr class='element-row'>
+                <td class='club_id'><?php echo $row['club_id'] ?></td>
+                <td class='club_name'><?php echo "<a href=club-details.php?id=" . $row['club_id'] . ">" . $row['club_name'] . "</a>"; ?></td>
+                <td class="club_president hidden"><?php echo $row['president_id'] ?></td>
+                <td class="club_section hidden"><?php echo $row['club_section'] ?></td>
+                <td class="club_description hidden"><?php echo $row['club_description'] ?></td>
+                <td class='club_poc'><?php echo $row['club_poc'] ?></td>
+                <td class='club_poc_email'><?php echo $row['club_poc_email'] ?></td>
+                <td class='club_meeting_days'><?php echo $row['club_meeting_days'] ?></td>
+                <td class='club_meeting_time'><?php echo $row['club_meeting_time'] ?></td>
+                <td class='club_meeting_loc'><?php echo $row['club_meeting_loc'] ?></td>
+                <th class="club_picture hidden"><?php echo $row['club_picture'] ?></th>
+                <?PHP
+                if (!empty($_SESSION["id"])) {
 
-                if ($_SESSION["id"] == $row['president_id'] || $_SESSION["id"] == 1) {
-                  echo "<td>
+                  if ($_SESSION["id"] == $row['president_id'] || $_SESSION["id"] == 1) {
+                    echo "<td>
                     <button id='open-Update' class='open-Update btn btn-primary btn-xs' title='Edit Row'
                             data-toggle='modal' data-target='#edit'>
                       <span class='icon-edit'></span>
                     </button>
                   </td>";
-                }
-                else {
-                  echo "<td></td>";
-                }
+                  }
+                  else {
+                    echo "<td></td>";
+                  }
 
-                if ($_SESSION["id"] == 1) {
-                  echo "<td>
+                  if ($_SESSION["id"] == 1) {
+                    echo "<td>
                     <button id='open-Delete' class='open-Delete btn btn-danger btn-xs' title='Delete Row'
                             data-toggle='modal' data-target='#delete'>
                       <span class='icon-delete'></span>
                     </button>
                   </td>";
+                  }
+                  else {
+                    echo "<td></td>";
+                  }
+
                 }
                 else {
-                  echo "<td></td>";
+                  echo "<td></td><td></td>";
                 }
 
-              }
-              else {
-                echo "<td></td><td></td>";
-              }
-
-              ?>
-            </tr>
-            <?php
+                ?>
+              </tr>
+              <?php
+            }
           }
           $res->free();
           ?>
@@ -342,7 +335,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <div class="form-group">
       <label>Club President:
-        <select name="club_president">' .
+        <select class="club_president" name="club_president">' .
       $pres_option_tags .
       '</select>
       </label>
@@ -350,7 +343,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <div class="form-group">
       <label>Section:
-        <select name="club_section">
+        <select class="club_section" name="club_section">
           <option value="A">A</option>
           <option value="B">B</option>
         </select>
@@ -413,7 +406,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <div class="form-group">
       <label>Club President:
-        <select name="club_president">' .
+        <select class="club_president" name="club_president">' .
       $pres_option_tags .
       '</select>
       </label>
@@ -421,7 +414,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     <div class="form-group">
       <label>Section:
-        <select name="club_section">
+        <select class="club_section" name="club_section">
           <option value="A">A</option>
           <option value="B">B</option>
         </select>

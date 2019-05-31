@@ -1,8 +1,8 @@
 /* custom icons */
 @font-face {
   font-family: 'icomoon';
-  src:  url('/static/fonts/icomoon.eot?c0e855');
-  src:  url('/static/fonts/icomoon.eot?c0e855#iefix') format('embedded-opentype'),
+  src: url('/static/fonts/icomoon.eot?c0e855');
+  src: url('/static/fonts/icomoon.eot?c0e855#iefix') format('embedded-opentype'),
   url('/static/fonts/icomoon.ttf?c0e855') format('truetype'),
   url('/static/fonts/icomoon.woff?c0e855') format('woff'),
   url('/static/fonts/icomoon.svg?c0e855#icomoon') format('svg');
@@ -28,21 +28,27 @@
 .icon-edit:before {
   content: "\e905";
 }
+
 .icon-download:before {
   content: "\e933";
 }
+
 .icon-search:before {
   content: "\e986";
 }
+
 .icon-delete:before {
   content: "\e9ac";
 }
+
 .icon-link:before {
   content: "\e9cb";
 }
+
 .icon-circle-up:before {
   content: "\ea41";
 }
+
 .icon-circle-down:before {
   content: "\ea43";
 }
@@ -93,32 +99,40 @@ footer .bottom-bar {
   height: 40px;
   background: #ddd;
 }
-th{
-	color: white;
-	text-shadow: #34282C 2px 1px 3px;
-}
-.filter-header{
-	color: white;
-	text-shadow: #34282C 2px 1px 5px;
-}
-body
-{
-	background: #2251f3 url("/static/images/bulldog-bg.png") no-repeat top right;
-	min-height:200px;
-	
+
+th {
+  color: white;
+  text-shadow: #34282C 2px 1px 3px;
 }
 
-h4{
-	color: white;
-	font-size:24px;
-	text-shadow: #34282C 2px 1px 5px;
+.filter-header, .filter-footer {
+  color: white;
+  text-shadow: #34282C 2px 1px 5px;
 }
-h1{
-	color: white;
-	font-size:36px;
-	text-shadow: #34282C 2px 1px 5px;
-	text-align: center;
+
+.filter-header label,
+.filter-footer label {
+  font-weight: bold !important;
 }
+
+body {
+  background: #2251f3 url("/static/images/bulldog-bg.png") no-repeat top right;
+  min-height: 200px;
+}
+
+h4 {
+  color: white;
+  font-size: 24px;
+  text-shadow: #34282C 2px 1px 5px;
+}
+
+h1 {
+  color: white;
+  font-size: 36px;
+  text-shadow: #34282C 2px 1px 5px;
+  text-align: center;
+}
+
 section {
   padding-left: 10px;
   padding-right: 10px;
@@ -169,6 +183,7 @@ a.currentlink {
   display: flex;
   flex-direction: row;
 }
+
 .wrapper-horizontal > div,
 .wrapper-horizontal > h1,
 .wrapper-horizontal > h2,
@@ -204,6 +219,7 @@ a.currentlink {
   display: flex;
   flex-direction: column;
 }
+
 .wrapper-vertical > div,
 .wrapper-vertical > h1,
 .wrapper-vertical > h2,
@@ -235,6 +251,7 @@ a.currentlink {
   align-items: center;
   justify-content: center;
 }
+
 .centered > * {
   text-align: center;
 }
@@ -244,6 +261,7 @@ a.currentlink {
   align-items: center;
   justify-content: space-between;
 }
+
 .edge-centered > * {
   text-align: center;
 }
@@ -253,6 +271,7 @@ a.currentlink {
   align-items: center;
   justify-content: space-evenly;
 }
+
 .equal-centered > * {
   text-align: center;
 }
@@ -270,6 +289,7 @@ a.currentlink {
 .resizable {
   overflow: hidden;
 }
+
 .resizable > * {
   overflow: auto;
   resize: both;
@@ -291,13 +311,17 @@ a.currentlink {
   padding: 1% 0 1% 0;
 }
 
-table.dataTable thead .sorting.sorting:after{opacity:0.8;}
+table.dataTable thead .sorting.sorting:after {
+  opacity: 0.8;
+}
 
 
 table.dataTable thead .sorting_asc.sorting_asc:after,
 table.dataTable thead .sorting_desc.sorting_desc:after,
 table.dataTable thead .sorting_asc_disabled.sorting_asc_disabled:after,
-table.dataTable thead .sorting_desc_disabled.sorting_desc_disabled:after{opacity:1;}
+table.dataTable thead .sorting_desc_disabled.sorting_desc_disabled:after {
+  opacity: 1;
+}
 
 .table-striped > tbody > tr:nth-of-type(even) {
   background-color: silver;

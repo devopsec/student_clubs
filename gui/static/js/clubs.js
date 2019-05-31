@@ -1,5 +1,5 @@
 /* global vars passed in namespace */
-var UPLOADS_URL_PATH = UPLOADS_URL_PATH || '/uploads';
+var UPLOADS_URL_PATH = UPLOADS_URL_PATH || '/uploads/images/';
 var fileReader = fileReader || new FileReader();
 
 /* datatable custom elements */
@@ -77,7 +77,7 @@ $(document).ready(function() {
             { "orderable": false, "targets": [0,2,3,7,8] }
         ],
         "order": [[ 1, 'asc' ]],
-        "dom": '<"wrapper-horizontal edge-centered filter-header"l<"#sectionFilter"><"#dayFilter">fr><t><"wrapper-horizontal edge-centered"ip>',
+        "dom": '<"wrapper-horizontal edge-centered filter-header"l<"#sectionFilter"><"#dayFilter">fr><t><"wrapper-horizontal edge-centered filter-footer"ip>',
         /* make sure we redraw the filters correctly */
         fnPreDrawCallback: function() {
             preDrawState = true;
@@ -189,8 +189,8 @@ $(document).ready(function() {
 
     /* update the club_meetings data on form submit */
     $('#add, #edit').find('form').submit(function(e) {
-        var modal_body = $(e.targetElement).find('.modal-body');
-        var day_elems = modal_body.find(".club_meetings input[type='checkbox']").get();
+        var form = $(e.target);
+        var day_elems = form.find(".club_meetings input[type='checkbox']").get();
 
         /* inverse normalization of data */
         var days = ['mon', 'tue', 'wed', 'thur', 'fri'];
@@ -201,7 +201,7 @@ $(document).ready(function() {
             }
         }
 
-        modal_body.find(".club_meeting_days").val(club_days.join(','));
+        form.find(".club_meeting_days").val(club_days.join(','));
         return true;
     });
 

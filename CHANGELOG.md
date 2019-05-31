@@ -2,9 +2,26 @@
 
 
 
+### File Upload Handling
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 18:53:13 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+- Resolves #6
+- add file upload handling to clubs
+- update a few styles
+- add current work on form handling
+
+
+---
+
+
 ### Fix Add Button style on clubs page
 
-> Branches Affected: look_and_feel,master  
+> Branches Affected: form_handling,look_and_feel,master  
 > Tags Affected:   
 > Date: Fri, 31 May 2019 14:10:23 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -17,7 +34,7 @@
 
 ### Reverted changes to library files
 
-> Branches Affected: look_and_feel  
+> Branches Affected: look_and_feel,master  
 > Tags Affected:   
 > Date: Fri, 31 May 2019 14:08:53 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  
@@ -30,7 +47,7 @@
 
 ### Pulled changes from bootstrap into main.css
 
-> Branches Affected: look_and_feel  
+> Branches Affected: look_and_feel,master  
 > Tags Affected:   
 > Date: Fri, 31 May 2019 14:01:42 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  
@@ -67,7 +84,7 @@
 
 ### Update Club Details look and feel
 
-> Branches Affected: look_and_feel  
+> Branches Affected: look_and_feel,master  
 > Tags Affected:   
 > Date: Fri, 31 May 2019 13:30:17 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  
@@ -80,7 +97,7 @@
 
 ### Added forbidden.html
 
-> Branches Affected: look_and_feel  
+> Branches Affected: look_and_feel,master  
 > Tags Affected:   
 > Date: Thu, 30 May 2019 09:54:36 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  
@@ -94,7 +111,7 @@ Landing page for forbidden actions, added body tag to club-details
 
 ### Added shadows to filter header in clubs.php
 
-> Branches Affected: look_and_feel  
+> Branches Affected: look_and_feel,master  
 > Tags Affected:   
 > Date: Wed, 29 May 2019 10:52:19 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  
@@ -109,7 +126,7 @@ Increased opacity for sort buttons to make them visible against the blue backgro
 
 ### Style Adjustments
 
-> Branches Affected: look_and_feel  
+> Branches Affected: look_and_feel,master  
 > Tags Affected:   
 > Date: Wed, 29 May 2019 10:11:01 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  
@@ -135,7 +152,7 @@ Increased opacity for sort buttons to make them visible against the blue backgro
 
 ### Modified sql query that populates club rows Point of contact pulls president's info now, rather than advisor Edit and delete button will only appear for the president of a club and the admin
 
-> Branches Affected: look_and_feel  
+> Branches Affected: look_and_feel,master  
 > Tags Affected:   
 > Date: Tue, 28 May 2019 17:48:32 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  

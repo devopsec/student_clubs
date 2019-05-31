@@ -1,4 +1,10 @@
 <?php
+/* DEBUG:
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+*/
+
 // import settings
 require_once 'include/db_config.php';
 require_once 'include/template_engine.php';
@@ -56,7 +62,7 @@ if (empty($_SESSION["id"]) || $_SESSION["id"] != 1) {
     <header>
       <nav class="nav-bar navbar-inverse wrapper-horizontal" role="navigation">
         <div>
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/views/clubs.php">
             <img src="/static/images/bulldog.svg" alt="bulldog">
           </a>
         </div>

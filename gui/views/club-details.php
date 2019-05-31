@@ -25,7 +25,7 @@ session_start();
  <header>
       <nav class="nav-bar navbar-inverse wrapper-horizontal" role="navigation">
         <div>
-          <a class="navbar-brand" href="#">
+          <a class="navbar-brand" href="/views/clubs.php">
             <img src="/static/images/bulldog.svg" alt="bulldog">
           </a>
         </div>
@@ -77,7 +77,7 @@ while ($row = $res->fetch_assoc()) {
   <tr>
   <td width="5%"></td>
   <td width="30%">
-  <img src="<?php echo UPLOADS_URL_PATH . $row['picture'] ?>" alt="Club Image"/>
+  <img src="<?php echo $row['picture'] ?>" alt="Club Image"/>
   </td>
   <td width="10%"></td>
   <td>
