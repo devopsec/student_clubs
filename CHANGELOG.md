@@ -2,9 +2,213 @@
 
 
 
+### Fix Add Button style on clubs page
+
+> Branches Affected: look_and_feel,master  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 14:10:23 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+
+
+---
+
+
+### Reverted changes to library files
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 14:08:53 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+
+
+---
+
+
+### Pulled changes from bootstrap into main.css
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 14:01:42 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+
+
+---
+
+
+### Clubs Page Fixes
+
+> Branches Affected: form_handling,look_and_feel,master  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 13:36:47 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+- Resolves #3
+- Resolves #10
+- add auth checks in clubs page
+- make custom filters work with datatables library
+- update add and edit modals
+- update clubs query
+- add image upload preview
+- add current work on file upload handling issue #6
+- add current work on form handling issue #9
+- misc style updates
+- remove error.html (was not part of project)
+
+
+---
+
+
+### Update Club Details look and feel
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 13:30:17 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+
+
+---
+
+
+### Added forbidden.html
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Thu, 30 May 2019 09:54:36 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+Landing page for forbidden actions, added body tag to club-details
+
+
+---
+
+
+### Added shadows to filter header in clubs.php
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Wed, 29 May 2019 10:52:19 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+Added shadows to filter header in clubs.php
+Increased opacity for sort buttons to make them visible against the blue background
+
+
+---
+
+
+### Style Adjustments
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Wed, 29 May 2019 10:11:01 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+
+
+---
+
+
+### Modified sql query that populates club rows Point of contact pulls president's info now, rather than advisor Edit and delete button will only appear for the president of a club and the admin
+
+> Branches Affected: form_handling,look_and_feel,master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 17:48:32 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+
+
+---
+
+
+### Modified sql query that populates club rows Point of contact pulls president's info now, rather than advisor Edit and delete button will only appear for the president of a club and the admin
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 17:48:32 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+
+
+---
+
+
+### Update club-details.php
+
+> Branches Affected: form_handling,look_and_feel,master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 15:45:56 -0400  
+> Author: thetechnician94 (94tylercraig@gmail.com)  
+> Committer: thetechnician94 (94tylercraig@gmail.com)  
+
+SQL query updated in previous commit.
+resolves #7
+
+
+---
+
+
+### Update logout.php
+
+> Branches Affected: form_handling,look_and_feel,master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 14:22:51 -0400  
+> Author: thetechnician94 (94tylercraig@gmail.com)  
+> Committer: thetechnician94 (94tylercraig@gmail.com)  
+
+logout.php to go to new landing page
+
+
+---
+
+
+### President Name
+
+> Branches Affected: form_handling,look_and_feel,master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 13:49:01 -0400  
+> Author: thetechnician94 (94tylercraig@gmail.com)  
+> Committer: thetechnician94 (94tylercraig@gmail.com)  
+
+Club president shows name instead of ID
+
+
+---
+
+
+### Landing Page
+
+> Branches Affected: form_handling,look_and_feel,master  
+> Tags Affected:   
+> Date: Tue, 28 May 2019 13:30:33 -0400  
+> Author: thetechnician94 (94tylercraig@gmail.com)  
+> Committer: thetechnician94 (94tylercraig@gmail.com)  
+
+Changed index to be landing page.
+Created background image.
+Stylized Buttons
+Needs work still
+
+
+---
+
+
 ### Current work on GUI
 
-> Branches Affected: master  
+> Branches Affected: form_handling,look_and_feel,master  
 > Tags Affected:   
 > Date: Fri, 24 May 2019 12:27:38 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -21,7 +225,7 @@
 
 ### Add widgets to datatables library
 
-> Branches Affected: master  
+> Branches Affected: form_handling,look_and_feel,master  
 > Tags Affected:   
 > Date: Tue, 21 May 2019 23:41:57 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -36,7 +240,7 @@
 
 ### Added feature: Generate DB test data
 
-> Branches Affected: master  
+> Branches Affected: form_handling,look_and_feel,master  
 > Tags Affected:   
 > Date: Wed, 15 May 2019 08:43:29 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  
@@ -49,7 +253,7 @@
 
 ### Add new features
 
-> Branches Affected: help,master  
+> Branches Affected: form_handling,help,look_and_feel,master  
 > Tags Affected:   
 > Date: Sun, 12 May 2019 16:27:22 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -62,7 +266,7 @@
 
 ### Merging login pages and forms
 
-> Branches Affected: help,master  
+> Branches Affected: form_handling,help,look_and_feel,master  
 > Tags Affected:   
 > Date: Wed, 8 May 2019 09:11:51 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -75,7 +279,7 @@
 
 ### Add Untracked Dir
 
-> Branches Affected: help,master  
+> Branches Affected: form_handling,help,look_and_feel,master  
 > Tags Affected:   
 > Date: Sat, 20 Apr 2019 19:04:22 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -89,7 +293,7 @@
 
 ### Update GUI
 
-> Branches Affected: help,master  
+> Branches Affected: form_handling,help,look_and_feel,master  
 > Tags Affected:   
 > Date: Sat, 20 Apr 2019 18:53:57 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -106,7 +310,7 @@
 
 ### Initial Commit
 
-> Branches Affected: help,master  
+> Branches Affected: form_handling,help,look_and_feel,master  
 > Tags Affected:   
 > Date: Sat, 20 Apr 2019 02:40:13 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -124,7 +328,7 @@
 
 ### Initial commit
 
-> Branches Affected: help,master  
+> Branches Affected: form_handling,help,look_and_feel,master  
 > Tags Affected:   
 > Date: Fri, 19 Apr 2019 20:30:30 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  

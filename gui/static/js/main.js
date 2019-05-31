@@ -91,6 +91,19 @@ function descendingSearch(selector, test) {
   descendingSearch(node_list, test)
 }
 
+/* create a global file reader (allow for previous declaration) */
+var fileReader = fileReader || new FileReader();
+
+/**
+ * Read Data from a URL
+ * @param input     Input Node (type of file)
+ */
+function readDataURL(input) {
+  if (input.files && input.files[0]) {
+    fileReader.readAsDataURL(input.files[0]);
+  }
+}
+
 /* handle multiple modal stacking */
 $(window).on('show.bs.modal', function(e) {
   modal = $(e.target);

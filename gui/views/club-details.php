@@ -1,9 +1,12 @@
 <?PHP
+/* DEBUG:
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+*/
 
-require 'include/db_config.php';
+require_once 'include/db_config.php';
+require_once 'include/app_config.php';
 
 $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT)
 or die("Connection to db failed: " . $db->connect_error);
@@ -68,13 +71,13 @@ $club_id = $_GET["id"];
 $res = $db->query("SELECT id as club_id, name as club_name, faculty_advisor as club_poc, faculty_email as club_poc_email, norm_meeting_days as club_meeting_days, norm_meeting_time as club_meeting_time, norm_meeting_loc as club_meeting_loc, description, (Select U.name from User U where U.id=C.president) as president,(Select U.email from User U where U.id=C.president) as president_email, picture FROM Club C WHERE id=$club_id");
 while ($row = $res->fetch_assoc()) {
   ?>
-  
+
   <h1><?php echo $row['club_name'] ?> </h1>
   <table width="100%" border="0" cellpadding="10">
   <tr>
   <td width="5%"></td>
   <td width="30%">
-  <img src="<?php echo $row['picture'] ?>" alt="Club Image"/>
+  <img src="<?php echo UPLOADS_URL_PATH . $row['picture'] ?>" alt="Club Image"/>
   </td>
   <td width="10%"></td>
   <td>

@@ -1,10 +1,16 @@
 <?php
+/* DEBUG:*/
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 // php settings
 ini_set('file_uploads', 1);
-error_reporting(E_ALL);
 
 // import settings
 require_once 'include/db_config.php';
+require_once 'include/app_config.php';
 require_once 'include/template_engine.php';
 
 // create connection
@@ -14,45 +20,90 @@ or die("Connection to db failed: " . $db->connect_error);
 // session settings
 session_start();
 
-/*try {
-  print_r($_POST);
+/* DEBUG: */
+try {
+  echo "<script>console.log('|=========== REQUEST ===========|')</script>";
+  echo "<script>console.log(" . json_encode($_REQUEST) . ")</script>";
+  echo "<script>console.log('|=========== POST ===========|')</script>";
+  echo "<script>console.log(" . json_encode($_POST) . ")</script>";
+  echo "<script>console.log('|=========== FILES ===========|')</script>";
+  echo "<script>console.log(" . json_encode($_FILES) . ")</script>";
 }
 catch (Exception $e) {
-  true;
-}*/
+  echo "<script>console.error('[ERR]: " . print_r($e, true) . "')</script>";
+}
 
 /* TODO: finish form handling */
 // form handler
-if ($_POST && isset($_POST['rowid'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($_POST['action'] === 'add') {
+    /*
+    TODO: this is very inefficient as more files are uploaded
+    we should run this at startup and then track the state across the server
+    */
+    /* get the next available upload name (incremental) */
+    $image_filenames = glob(UPLOADS_FILE_PATH . "/images/*");
+    $next_image_num = max(preg_replace("|[^0-9]|", "", $image_filenames)) + 1;
+    $upload_name = $next_image_num . "'" . pathinfo($_FILES['club_picture']['name'])['extension'];
+
     $res = $db->query("INSERT INTO Club VALUES (" .
         "NULL," .
-        $_POST['club_name'] . "," .
-        $_POST['club_president'] . ',' .
-        $_POST['club_section'] . ',' .
-        $_POST['club_description'] . ',' .
-        $_POST['club_poc'] . ',' .
-        $_POST['club_poc_email'] . ',' .
-        $_POST['club_meeting_days'] . ',' .
-        $_POST['club_meeting_time'] . ',' .
-        $_POST['club_meeting_loc'] . ',' .
-        $_POST['club_picture'] . ')'
+        "'" . $_POST['club_name'] . "'" . "," .
+        "'" . $_POST['club_president'] . "'" . "," .
+        "'" . $_POST['club_section'] . "'" . "," .
+        "'" . $_POST['club_description'] . "'" . "," .
+        "'" . $_POST['club_poc'] . "'" . "," .
+        "'" . $_POST['club_poc_email'] . "'" . "," .
+        "'" . $_POST['club_meeting_days'] . "'" . "," .
+        "'" . $_POST['club_meeting_time'] . "'" . "," .
+        "'" . $_POST['club_meeting_loc'] . "'" . "," .
+        "'" . $upload_name . "')"
     );
 
-    header("Location: views/clubs.php");
-    exit;
+    if ($res === TRUE) {
+      echo "<script>console.log('[OK]: Record created successfully')</script>";
+    }
+    else {
+      echo "<script>console.error('[ERR]: " . $db->error . "')</script>";
+    }
+
+    //header("Location: /views/clubs.php");
+    //exit;
   }
   elseif ($_POST['action'] === 'edit') {
+    if (isset($_POST['rowid'])) {
 
-    header("Location: views/clubs.php");
-    exit;
+      if ($res === TRUE) {
+        echo "<script>console.log('[OK]: Record updated successfully')</script>";
+      }
+      else {
+        echo "<script>console.error('[ERR]: " . $db->error . "')</script>";
+      }
+
+      $res->free();
+
+      header("Location: views/clubs.php");
+      exit;
+    }
   }
   elseif ($_POST['action'] === 'delete') {
+    if (isset($_POST['rowid'])) {
 
-    header("Location: views/clubs.php");
-    exit;
+      if ($res === TRUE) {
+        echo "<script>console.log('[OK]: Record deleted successfully')</script>";
+      }
+      else {
+        echo "<script>console.error('[ERR]: " . $db->error . "')</script>";
+      }
+
+      $res->free();
+
+      header("Location: views/clubs.php");
+      exit;
+    }
   }
+
 }
 ?>
 
@@ -157,26 +208,37 @@ if ($_POST && isset($_POST['rowid'])) {
 
           <thead>
           <tr class='element-row'>
+            <!-- dont need to show details for summary page, some data is hidden -->
             <th data-field="club_id">
-              <!-- add table row button -->
+              <!-- add row button only for admin -->
               <?PHP
-              if (!empty($_SESSION["id"])) {
+              if (!empty($_SESSION["id"]) && $_SESSION["id"] == 1) {
                 echo "<button id='open-Add' class='btn btn-success btn-md' title='Add Row' data-toggle='modal' data-target='#add'>Add </button>";
               }
               ?>
             </th>
             <th data-field="club_name">Club Name</th>
+            <th class="hidden" data-field="club_president"></th>
+            <th class="hidden" data-field="club_section"></th>
+            <th class="hidden" data-field="club_description"></th>
             <th data-field="club_poc">Point of Contact</th>
             <th data-field="club_poc_email">POC Email</th>
             <th data-field="club_meeting_days">Meeting Days</th>
             <th data-field="club_meeting_time">Meeting Time</th>
             <th data-field="club_meeting_loc">Meeting Location</th>
+            <th class="hidden" data-field="club_picture"></th>
+
             <?PHP
             if (!empty($_SESSION["id"])) {
-              echo "
-                    <th>Edit</th>
-                    <th>Delete</th>
-                ";
+              /* only show edit / delete column if auth permissions high enough */
+              $res = $db->query("SELECT president FROM Club WHERE president=" . $_SESSION["id"] . " LIMIT 1");
+              if (mysqli_fetch_row($res) || $_SESSION["id"] == 1) {
+                echo "<th>Edit</th>";
+              }
+              if ($_SESSION["id"] == 1) {
+                echo "<th>Delete</th>";
+              }
+              $res->free();
             }
             ?>
           </tr>
@@ -184,9 +246,10 @@ if ($_POST && isset($_POST['rowid'])) {
           <tbody>
 
           <?php
-          $res = $db->query("SELECT c.id AS club_id, c.name AS club_name, u.id as president_id, u.name AS club_poc, u.email AS club_poc_email,
-								norm_meeting_days AS club_meeting_days, norm_meeting_time AS club_meeting_time, norm_meeting_loc AS club_meeting_loc
-							FROM Club c LEFT JOIN  User u on c.president = u.id");
+          $res = $db->query("SELECT c.id AS club_id, c.name AS club_name, u.id as president_id, c.section as club_section, 
+            c.description as club_description, u.name AS club_poc, u.email AS club_poc_email, norm_meeting_days AS club_meeting_days, 
+            norm_meeting_time AS club_meeting_time, norm_meeting_loc AS club_meeting_loc, c.picture as club_picture
+            FROM Club c LEFT JOIN  User u on c.president = u.id");
           if ($res->num_rows == 0) {
             return;
           }
@@ -196,29 +259,47 @@ if ($_POST && isset($_POST['rowid'])) {
             <tr class='element-row'>
               <td class='club_id'><?php echo $row['club_id'] ?></td>
               <td class='club_name'><?php echo "<a href=club-details.php?id=" . $row['club_id'] . ">" . $row['club_name'] . "</a>"; ?></td>
+              <td class="club_president hidden"><?php echo $row['president_id'] ?></td>
+              <td class="club_section hidden"><?php echo $row['club_section'] ?></td>
+              <td class="club_description hidden"><?php echo $row['club_description'] ?></td>
               <td class='club_poc'><?php echo $row['club_poc'] ?></td>
               <td class='club_poc_email'><?php echo $row['club_poc_email'] ?></td>
               <td class='club_meeting_days'><?php echo $row['club_meeting_days'] ?></td>
               <td class='club_meeting_time'><?php echo $row['club_meeting_time'] ?></td>
               <td class='club_meeting_loc'><?php echo $row['club_meeting_loc'] ?></td>
+              <th class="club_picture hidden"><?php echo $row['club_picture'] ?></th>
               <?PHP
-              if (!empty($_SESSION["id"]) and ($_SESSION["id"] == $row['president_id'] or $_SESSION["id"] == 1)) {
-                echo "<td>
+              if (!empty($_SESSION["id"])) {
+
+                if ($_SESSION["id"] == $row['president_id'] || $_SESSION["id"] == 1) {
+                  echo "<td>
                     <button id='open-Update' class='open-Update btn btn-primary btn-xs' title='Edit Row'
                             data-toggle='modal' data-target='#edit'>
                       <span class='icon-edit'></span>
                     </button>
                   </td>";
-                echo "<td>
+                }
+                else {
+                  echo "<td></td>";
+                }
+
+                if ($_SESSION["id"] == 1) {
+                  echo "<td>
                     <button id='open-Delete' class='open-Delete btn btn-danger btn-xs' title='Delete Row'
                             data-toggle='modal' data-target='#delete'>
                       <span class='icon-delete'></span>
                     </button>
                   </td>";
+                }
+                else {
+                  echo "<td></td>";
+                }
+
               }
               else {
                 echo "<td></td><td></td>";
               }
+
               ?>
             </tr>
             <?php
@@ -248,7 +329,7 @@ if ($_POST && isset($_POST['rowid'])) {
   $pres_option_tags = '';
   $res = $db->query("SELECT t2.id AS user_id,t2.name AS president_name FROM Officers t1, User t2 WHERE t1.user_id = t2.id AND t1.position = 'president'");
   if ($res->num_rows !== 0) {
-  while ($row = $res->fetch_assoc()) {
+    while ($row = $res->fetch_assoc()) {
       $pres_option_tags .= '<option value="' . $row['user_id'] . '">' . $row['president_name'] . '</option>\n';
     }
   }
@@ -262,8 +343,8 @@ if ($_POST && isset($_POST['rowid'])) {
     <div class="form-group">
       <label>Club President:
         <select name="club_president">' .
-          $pres_option_tags .
-        '</select>
+      $pres_option_tags .
+      '</select>
       </label>
     </div>
     
@@ -289,22 +370,23 @@ if ($_POST && isset($_POST['rowid'])) {
     </div>
     
     <div class="form-group">
-      <div class="club_meeting_days">
+      <div class="club_meetings">
+        <input type="hidden" class="club_meeting_days" name="club_meeting_days">
         <label>Meeting Days:
           <label class="checkbox-inline">
-            <input type="checkbox" name="monday">M
+            <input type="checkbox">M
           </label>
           <label class="checkbox-inline">
-            <input type="checkbox" name="tuesday">T
+            <input type="checkbox">T
           </label>
           <label class="checkbox-inline">
-            <input type="checkbox" name="wednesday">W
+            <input type="checkbox">W
           </label>
           <label class="checkbox-inline">
-            <input type="checkbox" name="thursday">Th
+            <input type="checkbox">Th
           </label>
           <label class="checkbox-inline">
-            <input type="checkbox" name="friday">F
+            <input type="checkbox">F
           </label>
         </label>
       </div>
@@ -320,51 +402,79 @@ if ($_POST && isset($_POST['rowid'])) {
     
     <div class="form-group">
       <input class="form-control club_picture" type="file" name="club_picture">
+      <img class="club_pic_preview img-thumbnail hidden" src="#" alt="preview">
     </div>
   ');
 
   $template->set('edit_form_body', '
     <div class="form-group">
-        <input class="form-control club_name" type="text" name="club_name" placeholder="Club Name">
-      </div>
-      
-      <div class="form-group">
-        <input class="form-control club_poc" type="text" name="club_poc" placeholder="Point of Contact">
-      </div>
-      
-      <div class="form-group">
-        <input class="form-control club_poc_email" type="email" name="club_poc_email" placeholder="Point of Contact Email">
-      </div>
-      
-      <div class="form-group">
-        <div class="club_meeting_days">
-          <label>Meeting Days:
-            <label class="checkbox-inline">
-              <input type="checkbox" name="monday">M
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="tuesday">T
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="wednesday">W
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="thursday">Th
-            </label>
-            <label class="checkbox-inline">
-              <input type="checkbox" name="friday">F
-            </label>
+      <input class="form-control club_name" type="text" name="club_name" placeholder="Club Name" autofocus>
+    </div>
+    
+    <div class="form-group">
+      <label>Club President:
+        <select name="club_president">' .
+      $pres_option_tags .
+      '</select>
+      </label>
+    </div>
+    
+    <div class="form-group">
+      <label>Section:
+        <select name="club_section">
+          <option value="A">A</option>
+          <option value="B">B</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="form-group">
+      <input class="form-control club_description" type="text" name="club_description" placeholder="Club Description">
+    </div>
+    
+    <div class="form-group">
+      <input class="form-control club_poc" type="text" name="club_poc" placeholder="Point of Contact">
+    </div>
+    
+    <div class="form-group">
+      <input class="form-control club_poc_email" type="email" name="club_poc_email" placeholder="Point of Contact Email">
+    </div>
+    
+    <div class="form-group">
+      <div class="club_meetings">
+        <input type="hidden" class="club_meeting_days" name="club_meeting_days">
+        <label>Meeting Days:
+          <label class="checkbox-inline">
+            <input type="checkbox">M
           </label>
-        </div>
+          <label class="checkbox-inline">
+            <input type="checkbox">T
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox">W
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox">Th
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox">F
+          </label>
+        </label>
       </div>
-      
-      <div class="form-group">
-        <input class="form-control club_meeting_time" type="time" name="club_meeting_time" placeholder="Meeting Time">
-      </div>
-      
-      <div class="form-group">
-        <input class="form-control club_meeting_loc" type="text" name="club_meeting_loc" placeholder="Meeting Location">
-      </div>
+    </div>
+    
+    <div class="form-group">
+      <input class="form-control club_meeting_time" type="time" name="club_meeting_time" placeholder="Meeting Time">
+    </div>
+    
+    <div class="form-group">
+      <input class="form-control club_meeting_loc" type="text" name="club_meeting_loc" placeholder="Meeting Location">
+    </div>
+    
+    <div class="form-group">
+      <input class="form-control club_picture" type="file" name="club_picture">
+      <img class="club_pic_preview img-thumbnail hidden" src="#" alt="preview">
+    </div>
   ');
 
   echo $template->render();
