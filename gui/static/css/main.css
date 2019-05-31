@@ -93,11 +93,37 @@ footer .bottom-bar {
   height: 40px;
   background: #ddd;
 }
+th{
+	color: white;
+	text-shadow: #34282C 2px 1px 3px;
+}
+.filter-header{
+	color: white;
+	text-shadow: #34282C 2px 1px 5px;
+}
+body
+{
+	background: #2251f3 url("/static/images/bulldog-bg.png") no-repeat top right;
+	min-height:200px;
+	
+}
 
+h4{
+	color: white;
+	font-size:24px;
+	text-shadow: #34282C 2px 1px 5px;
+}
+h1{
+	color: white;
+	font-size:36px;
+	text-shadow: #34282C 2px 1px 5px;
+	text-align: center;
+}
 section {
   padding-left: 10px;
   padding-right: 10px;
 }
+
 
 a {
   color: #9d9d9d;
@@ -263,4 +289,28 @@ a.currentlink {
 
 .table-responsive table {
   padding: 1% 0 1% 0;
+}
+
+table.dataTable thead .sorting.sorting:after{opacity:0.8;}
+
+
+table.dataTable thead .sorting_asc.sorting_asc:after,
+table.dataTable thead .sorting_desc.sorting_desc:after,
+table.dataTable thead .sorting_asc_disabled.sorting_asc_disabled:after,
+table.dataTable thead .sorting_desc_disabled.sorting_desc_disabled:after{opacity:1;}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+  background-color: silver;
+}
+
+.table-hover > tbody > tr:hover {
+  background-color: gray;
+}
+
+.table-hover > tbody > tr > td.success:hover,
+.table-hover > tbody > tr > th.success:hover,
+.table-hover > tbody > tr.success:hover > td,
+.table-hover > tbody > tr:hover > .success,
+.table-hover > tbody > tr.success:hover > th {
+  background-color: gray;
 }

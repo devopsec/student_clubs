@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- table title -->
         <div class="wrapper-horizontal edge-centered">
-          <h4>Kettering Student Organizations</h4>
+          <h4 style="Color:white">Kettering Student Organizations</h4>
         </div>
 
       </div>

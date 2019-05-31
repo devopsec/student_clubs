@@ -4,7 +4,7 @@
 
 ### Fix Add Button style on clubs page
 
-> Branches Affected: master  
+> Branches Affected: look_and_feel,master  
 > Tags Affected:   
 > Date: Fri, 31 May 2019 14:10:23 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -15,9 +15,35 @@
 ---
 
 
+### Reverted changes to library files
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 14:08:53 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+
+
+---
+
+
+### Pulled changes from bootstrap into main.css
+
+> Branches Affected: look_and_feel  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 14:01:42 -0400  
+> Author: Caspian Peavyhouse (peav2414@kettering.edu)  
+> Committer: Caspian Peavyhouse (peav2414@kettering.edu)  
+
+
+
+---
+
+
 ### Clubs Page Fixes
 
-> Branches Affected: form_handling,master  
+> Branches Affected: form_handling,look_and_feel,master  
 > Tags Affected:   
 > Date: Fri, 31 May 2019 13:36:47 -0400  
 > Author: Tyler Moore (tmoore@goflyball.com)  
@@ -96,7 +122,7 @@ Increased opacity for sort buttons to make them visible against the blue backgro
 
 ### Modified sql query that populates club rows Point of contact pulls president's info now, rather than advisor Edit and delete button will only appear for the president of a club and the admin
 
-> Branches Affected: form_handling,master  
+> Branches Affected: form_handling,look_and_feel,master  
 > Tags Affected:   
 > Date: Tue, 28 May 2019 17:48:32 -0400  
 > Author: Caspian Peavyhouse (peav2414@kettering.edu)  

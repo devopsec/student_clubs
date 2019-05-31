@@ -77,7 +77,7 @@ $(document).ready(function() {
             { "orderable": false, "targets": [0,2,3,7,8] }
         ],
         "order": [[ 1, 'asc' ]],
-        "dom": '<"wrapper-horizontal edge-centered"l<"#sectionFilter"><"#dayFilter">fr><t><"wrapper-horizontal edge-centered"ip>',
+        "dom": '<"wrapper-horizontal edge-centered filter-header"l<"#sectionFilter"><"#dayFilter">fr><t><"wrapper-horizontal edge-centered"ip>',
         /* make sure we redraw the filters correctly */
         fnPreDrawCallback: function() {
             preDrawState = true;
@@ -128,6 +128,7 @@ $(document).ready(function() {
             $(day_inputs[i]).removeAttr('checked');
         }
     });
+
     $('#open-Update').click(function() {
         var row_index = $(this).parent().parent().parent().index() - 1;
         var c = document.getElementById('clubsTable');
