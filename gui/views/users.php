@@ -10,7 +10,7 @@ or die("Connection to db failed: " . $db->connect_error);
 // session settings
 session_start();
 
-if ($_SESSION["id"] != 1) {
+if (empty($_SESSION["id"]) || $_SESSION["id"] != 1) {
   echo "<br>You must be logged in as an administrator to view this page";
   die();
 }
@@ -153,7 +153,7 @@ if ($_SESSION["id"] != 1) {
           <tr class='element-row'>
             <th data-field="user_id">
               <!-- add table row button -->
-              <button id='open-ClubAdd' class='btn btn-success btn-md' data-title='Add' data-toggle='modal'
+              <button id='open-Add' class='btn btn-success btn-md' data-title='Add' data-toggle='modal'
                       data-target='#add'>Add
               </button>
             </th>

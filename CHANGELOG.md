@@ -2,6 +2,30 @@
 
 
 
+### Clubs Page Fixes
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Fri, 31 May 2019 13:36:47 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+- Resolves #3
+- Resolves #10
+- add auth checks in clubs page
+- make custom filters work with datatables library
+- update add and edit modals
+- update clubs query
+- add image upload preview
+- add current work on file upload handling issue #6
+- add current work on form handling issue #9
+- misc style updates
+- remove error.html (was not part of project)
+
+
+---
+
+
 ### Modified sql query that populates club rows Point of contact pulls president's info now, rather than advisor Edit and delete button will only appear for the president of a club and the admin
 
 > Branches Affected: master  

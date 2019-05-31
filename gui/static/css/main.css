@@ -1,3 +1,4 @@
+/* custom icons */
 @font-face {
   font-family: 'icomoon';
   src:  url('/static/fonts/icomoon.eot?c0e855');
@@ -107,9 +108,11 @@ a.currentlink {
   color: #FF8100;
 }
 
-#open-Delete, #open-Update {
+#open-Add, #open-Delete, #open-Update {
   height: 100%;
-  max-width: 100%;
+  max-width: 50%;
+  min-width: 30px;
+  min-height: 25px;
 }
 
 .container.container {

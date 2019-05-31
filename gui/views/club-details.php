@@ -1,9 +1,12 @@
 <?PHP
+/* DEBUG:
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+*/
 
-require 'include/db_config.php';
+require_once 'include/db_config.php';
+require_once 'include/app_config.php';
 
 $db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT)
 or die("Connection to db failed: " . $db->connect_error);
@@ -18,7 +21,7 @@ $res = $db->query("SELECT id as club_id, name as club_name, faculty_advisor as c
 while ($row = $res->fetch_assoc()) {
   ?>
   <h1><?php echo $row['club_name'] ?> </h1>
-  <img src="<?php echo $row['picture'] ?>" alt="Club Image"/>
+  <img src="<?php echo UPLOADS_URL_PATH . $row['picture'] ?>" alt="Club Image"/>
   <table border='1' style="border-collapse: collapse">
     <tr>
       <td>Club President</td>
