@@ -58,6 +58,76 @@ $.fn.dataTable.ext.search.push(
     searchTable
 );
 
+/* define modal dynamic modal handling functions (needed for redraws) */
+function handleOpenUpdateModal(e) {
+    var row_index = $(e.target).closest('tr').index();
+    var c = document.getElementById('clubsTable');
+    var club_id = $(c).find('tbody tr:eq(' + row_index + ') td:eq(0)').text();
+    var club_name = $(c).find('tbody tr:eq(' + row_index + ') td:eq(1)').text();
+    var club_president = $(c).find('tbody tr:eq(' + row_index + ') td:eq(2)').text();
+    var club_section = $(c).find('tbody tr:eq(' + row_index + ') td:eq(3)').text();
+    var club_description = $(c).find('tbody tr:eq(' + row_index + ') td:eq(4)').text();
+    var club_poc = $(c).find('tbody tr:eq(' + row_index + ') td:eq(5)').text();
+    var club_poc_email = $(c).find('tbody tr:eq(' + row_index + ') td:eq(6)').text();
+    var club_meeting_days = $(c).find('tbody tr:eq(' + row_index + ') td:eq(7)').text().toLowerCase().split(',');
+    var club_meeting_time = $(c).find('tbody tr:eq(' + row_index + ') td:eq(8)').text();
+    var club_meeting_loc = $(c).find('tbody tr:eq(' + row_index + ') td:eq(9)').text();
+    var club_picture = $(c).find('tbody tr:eq(' + row_index + ') td:eq(10)').text();
+
+
+    /* update modal fields */
+    var modal_body = $('#edit .modal-body');
+    modal_body.find(".row_id").val(club_id);
+    modal_body.find(".club_name").val(club_name);
+    modal_body.find(".club_president").val(club_president);
+    modal_body.find(".club_section").val(club_section);
+    modal_body.find(".club_description").val(club_description);
+    modal_body.find(".club_poc").val(club_poc);
+    modal_body.find(".club_poc_email").val(club_poc_email);
+    modal_body.find(".club_meeting_days").val(club_meeting_days);
+    modal_body.find(".club_meeting_time").val(club_meeting_time);
+    modal_body.find(".club_meeting_loc").val(club_meeting_loc);
+
+    if (club_picture) {
+        var file_data = new ClipboardEvent('').clipboardData || // Firefox < 62 workaround exploiting https://bugzilla.mozilla.org/show_bug.cgi?id=1422655
+            new DataTransfer(); // specs compliant (as of March 2018 only Chrome)
+        file_data.items.add(new File([club_picture], club_picture));
+        modal_body.find(".club_picture").get(0).files = file_data.files;
+    }
+
+    /* normalize days into a fixed length dict */
+    var days = {'mon': 0, 'tue': 0, 'wed': 0, 'thur': 0, 'fri': 0};
+    for (var i = 0; i < club_meeting_days.length; i++) {
+        if (club_meeting_days[i] in days) {
+            days[club_meeting_days[i]] = 1;
+        }
+    }
+
+    /* check corresponding meeting days */
+    var day_inputs = modal_body.find(".club_meetings input[type='checkbox']");
+    i = 0;
+    for (var day in days) {
+        if (days[day] === 1) {
+            $(day_inputs[i]).attr('checked', true);
+        } else {
+            $(day_inputs[i]).removeAttr('checked');
+        }
+
+        i++;
+    }
+}
+
+function handleOpenDeleteModal(e) {
+    var row_index = $(e.target).closest('tr').index();
+    var c = document.getElementById('clubsTable');
+    var club_id = $(c).find('tbody tr:eq(' + row_index + ') td:eq(0)').text();
+
+    /* update modal fields */
+    var modal_body = $('#delete .modal-body');
+    modal_body.find(".row_id").val(club_id);
+}
+
+
 /* any handlers depending on DOM elems go here */
 $(document).ready(function() {
     /* add code syntax highlighting */
@@ -89,6 +159,11 @@ $(document).ready(function() {
             });
             preDrawState = false;
             return true;
+        },
+        /* update event listeners */
+        fnDrawCallback: function() {
+            $('.open-Update').click(handleOpenUpdateModal);
+            $('.open-Delete').click(handleOpenDeleteModal);
         }
     });
     /* show inital table */
@@ -126,64 +201,6 @@ $(document).ready(function() {
         var day_inputs = modal_body.find(".club_meetings input[type='checkbox']");
         for (var i = 0; i < 5; i++) {
             $(day_inputs[i]).removeAttr('checked');
-        }
-    });
-
-    $('#open-Update').click(function() {
-        var row_index = $(this).parent().parent().parent().index() - 1;
-        var c = document.getElementById('clubsTable');
-        var club_id = $(c).find('tbody tr:eq(' + row_index + ') td:eq(0)').text();
-        var club_name = $(c).find('tbody tr:eq(' + row_index + ') td:eq(1)').text();
-        var club_president = $(c).find('tbody tr:eq(' + row_index + ') td:eq(2)').text();
-        var club_section = $(c).find('tbody tr:eq(' + row_index + ') td:eq(3)').text();
-        var club_description = $(c).find('tbody tr:eq(' + row_index + ') td:eq(4)').text();
-        var club_poc = $(c).find('tbody tr:eq(' + row_index + ') td:eq(5)').text();
-        var club_poc_email = $(c).find('tbody tr:eq(' + row_index + ') td:eq(6)').text();
-        var club_meeting_days = $(c).find('tbody tr:eq(' + row_index + ') td:eq(7)').text().toLowerCase().split(',');
-        var club_meeting_time = $(c).find('tbody tr:eq(' + row_index + ') td:eq(8)').text();
-        var club_meeting_loc = $(c).find('tbody tr:eq(' + row_index + ') td:eq(9)').text();
-        var club_picture = $(c).find('tbody tr:eq(' + row_index + ') td:eq(10)').text();
-
-
-        /* update modal fields */
-        var modal_body = $('#edit .modal-body');
-        modal_body.find(".row_id").val(club_id);
-        modal_body.find(".club_name").val(club_name);
-        modal_body.find(".club_president").val(club_president);
-        modal_body.find(".club_section").val(club_section);
-        modal_body.find(".club_description").val(club_description);
-        modal_body.find(".club_poc").val(club_poc);
-        modal_body.find(".club_poc_email").val(club_poc_email);
-        modal_body.find(".club_meeting_days").val(club_meeting_days);
-        modal_body.find(".club_meeting_time").val(club_meeting_time);
-        modal_body.find(".club_meeting_loc").val(club_meeting_loc);
-
-        if (club_picture) {
-            var file_data = new ClipboardEvent('').clipboardData || // Firefox < 62 workaround exploiting https://bugzilla.mozilla.org/show_bug.cgi?id=1422655
-                new DataTransfer(); // specs compliant (as of March 2018 only Chrome)
-            file_data.items.add(new File([club_picture], UPLOADS_URL_PATH + club_picture));
-            modal_body.find(".club_picture").get(0).files = file_data.files;
-        }
-
-        /* normalize days into a fixed length dict */
-        var days = {'mon': 0, 'tue': 0, 'wed': 0, 'thur': 0, 'fri': 0};
-        for (var i = 0; i < club_meeting_days.length; i++) {
-            if (club_meeting_days[i] in days) {
-                days[club_meeting_days[i]] = 1;
-            }
-        }
-
-        /* check corresponding meeting days */
-        var day_inputs = modal_body.find(".club_meetings input[type='checkbox']");
-        i = 0;
-        for (var day in days) {
-            if (days[day] === 1) {
-                $(day_inputs[i]).attr('checked', true);
-            } else {
-                $(day_inputs[i]).removeAttr('checked');
-            }
-
-            i++;
         }
     });
 

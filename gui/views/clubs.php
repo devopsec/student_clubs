@@ -1,7 +1,8 @@
 <?php
-/* DEBUG:*/
+/* DEBUG:
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
+*/
 error_reporting(E_ALL);
 
 
@@ -20,23 +21,22 @@ or die("Connection to db failed: " . $db->connect_error);
 // session settings
 session_start();
 
-/* DEBUG: */
-//  echo "<script>console.log('|=========== REQUEST ===========|')</script>";
-//  echo "<script>console.log(" . json_encode($_REQUEST) . ")</script>";
+/* DEBUG:
   echo "<script>console.log('|=========== POST ===========|')</script>";
   echo "<script>console.log(" . json_encode($_POST) . ")</script>";
   echo "<script>console.log('|=========== FILES ===========|')</script>";
   echo "<script>console.log(" . json_encode($_FILES) . ")</script>";
+*/
 
-/* TODO: finish form handling */
 // form handler
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if ($_POST['action'] === 'add') {
 
+  if ($_POST['action'] === 'add') {
     /*
     TODO: this is very inefficient as more files are uploaded
     we should run this at startup and then track the state across the server
     */
+
     /* get the next available upload name (incremental) */
     $image_filenames = glob(UPLOADS_FILE_PATH . "*");
     $next_image_num = max(preg_replace("|[^0-9]|", "", $image_filenames)) + 1;
@@ -56,10 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         "'" . $_POST['club_meeting_loc'] . "'" . "," .
         "'" . $upload_name . "')";
 
-    echo "<script>console.log('[SQL]: ' . $sql)</script>";
-
     $res = $db->query($sql);
-    if ($res === TRUE) {
+    if ($res === true) {
       echo "<script>console.log('[OK]: Record created successfully')</script>";
       move_uploaded_file($_FILES['club_picture']['tmp_name'], UPLOADS_FILE_PATH . $filename);
     }
@@ -69,30 +67,83 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   }
   elseif ($_POST['action'] === 'edit') {
-    if (isset($_POST['rowid'])) {
+    if (isset($_POST['row_id'])) {
 
-      if ($res === TRUE) {
+      /* get previous uploads */
+      $sql = "SELECT picture as club_picture FROM Club WHERE id=" . $_POST['row_id'] . " LIMIT 1";
+      $res = $db->query($sql);
+      if ($res->num_rows !== 0) {
+        $urlpath = $res->fetch_assoc()['club_picture'];
+
+        $filepath = $_SERVER['DOCUMENT_ROOT'] . $urlpath;
+      }
+      $res->free();
+
+      if (file_exists($filepath)) {
+        $image_num = pathinfo($filepath)['filename'];
+      }
+      else {
+        $image_filenames = glob(UPLOADS_FILE_PATH . "*");
+        $image_num = max(preg_replace("|[^0-9]|", "", $image_filenames)) + 1;
+      }
+      $new_filename = $image_num . "." . pathinfo($_FILES['club_picture']['name'])['extension'];
+      $upload_name = UPLOADS_URL_PATH . $new_filename;
+
+      $sql = "UPDATE Club SET " .
+          "name='" . $_POST['club_name'] . "'" . "," .
+          "president='" . $_POST['club_president'] . "'" . "," .
+          "section='" . $_POST['club_section'] . "'" . "," .
+          "description='" . $_POST['club_description'] . "'" . "," .
+          "faculty_advisor='" . $_POST['club_poc'] . "'" . "," .
+          "faculty_email='" . $_POST['club_poc_email'] . "'" . "," .
+          "norm_meeting_days='" . $_POST['club_meeting_days'] . "'" . "," .
+          "norm_meeting_time='" . $_POST['club_meeting_time'] . "'" . "," .
+          "norm_meeting_loc='" . $_POST['club_meeting_loc'] . "'" . "," .
+          "picture='" . $upload_name . "' WHERE id=" . $_POST['row_id'];
+
+      $res = $db->query($sql);
+      if ($res === true) {
+        /* replace previous uploads */
+        if (file_exists($filepath)) {
+          unlink($filepath);
+        }
+        move_uploaded_file($_FILES['club_picture']['tmp_name'], UPLOADS_FILE_PATH . $new_filename);
         echo "<script>console.log('[OK]: Record updated successfully')</script>";
       }
       else {
         echo "<script>console.error('[ERR]: " . json_encode($db->error) . "')</script>";
       }
 
-      $res->free();
-
     }
   }
   elseif ($_POST['action'] === 'delete') {
-    if (isset($_POST['rowid'])) {
+    if (isset($_POST['row_id'])) {
 
-      if ($res === TRUE) {
+      $filepath = "";
+
+      /* get stored uploads */
+      $sql = "SELECT picture as club_picture FROM Club WHERE id=" . $_POST['row_id'] . " LIMIT 1";
+      $res = $db->query($sql);
+      if ($res->num_rows !== 0) {
+        $urlpath = $res->fetch_assoc()['club_picture'];
+
+        $filepath = $_SERVER['DOCUMENT_ROOT'] . $urlpath;
+      }
+      $res->free();
+
+      $sql = "DELETE FROM Club WHERE id=" . $_POST['row_id'];
+
+      $res = $db->query($sql);
+      if ($res === true) {
+        /* delete stored uploads */
+        if (file_exists($filepath)) {
+          unlink($filepath);
+        }
         echo "<script>console.log('[OK]: Record deleted successfully')</script>";
       }
       else {
         echo "<script>console.error('[ERR]: " . json_encode($db->error) . "')</script>";
       }
-
-      $res->free();
 
     }
   }
@@ -158,11 +209,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               } ?>
             </a>
             <ul class="dropdown-menu" role="menu">
-              <!-- TODO: allow non admin users to edit their profile (parts of it) -->
-              <li><a href="#"><span class="fa fa-user"></span>My Profile</a></li>
-              <li><a href="/views/users.php"><span class="fas fa-users-cog"></span> My Users</a></li>
-              <!-- TODO: add display settings page -->
-              <!-- <li><a href="#"><span class="fa fa-gear"></span>Settings</a></li> -->
+              <?php if (empty($_SESSION["id"]) || $_SESSION["id"] != 1) {
+                echo '<li><a href="#"><span class="fa fa-user"></span>My Profile</a></li>';
+              }?>
+              <?php if (!empty($_SESSION["id"]) && $_SESSION["id"] == 1) {
+                echo '<li><a href="/views/users.php"><span class="fa fa-users-cog"></span>My Users</a></li>';
+              }?>
+              <li><a href="#"><span class="fa fa-tools"></span>App Settings</a></li>
               <li class="divider"></li>
               <li>
                 <?php if (!empty($_SESSION["id"])): ?>
@@ -259,7 +312,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td class='club_meeting_days'><?php echo $row['club_meeting_days'] ?></td>
                 <td class='club_meeting_time'><?php echo $row['club_meeting_time'] ?></td>
                 <td class='club_meeting_loc'><?php echo $row['club_meeting_loc'] ?></td>
-                <th class="club_picture hidden"><?php echo $row['club_picture'] ?></th>
+                <td class="club_picture hidden"><?php echo $row['club_picture'] ?></td>
                 <?PHP
                 if (!empty($_SESSION["id"])) {
 
@@ -320,7 +373,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $template = new Template('templates/modals.php');
 
   $pres_option_tags = '';
-  $res = $db->query("SELECT t2.id AS user_id,t2.name AS president_name FROM Officers t1, User t2 WHERE t1.user_id = t2.id AND t1.position = 'president'");
+  $res = $db->query("SELECT DISTINCT t2.id AS user_id,t2.name AS president_name FROM Officers t1, User t2 WHERE t1.user_id = t2.id AND t1.position = 'president'");
   if ($res->num_rows !== 0) {
     while ($row = $res->fetch_assoc()) {
       $pres_option_tags .= '<option value="' . $row['user_id'] . '">' . $row['president_name'] . '</option>\n';
