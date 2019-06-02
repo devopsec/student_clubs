@@ -2,6 +2,19 @@
 
 
 
+### Remove Extraneous Grants
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Sun, 2 Jun 2019 17:19:59 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+
+
+---
+
+
 ### Add Form Handling
 
 > Branches Affected: master  

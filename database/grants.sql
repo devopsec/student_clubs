@@ -1,11 +1,4 @@
 GRANT USAGE ON *.* TO 'cs461'@'%';
 GRANT ALL PRIVILEGES ON `CS461`.* TO 'cs461'@'%';
-GRANT ALL PRIVILEGES ON *.* TO 'debian-sys-maint'@'localhost' WITH GRANT OPTION;
-GRANT SUPER ON *.* TO 'mysql.session'@'localhost';
-GRANT SELECT ON `performance_schema`.* TO 'mysql.session'@'localhost';
-GRANT SELECT ON `mysql`.`user` TO 'mysql.session'@'localhost';
-GRANT USAGE ON *.* TO 'mysql.sys'@'localhost';
-GRANT TRIGGER ON `sys`.* TO 'mysql.sys'@'localhost';
-GRANT SELECT ON `sys`.`sys_config` TO 'mysql.sys'@'localhost';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
 GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION;
