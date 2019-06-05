@@ -2,6 +2,19 @@
 
 
 
+### Fix Typo in README
+
+> Branches Affected: master  
+> Tags Affected:   
+> Date: Wed, 5 Jun 2019 08:34:01 -0400  
+> Author: Tyler Moore (tmoore@goflyball.com)  
+> Committer: Tyler Moore (tmoore@goflyball.com)  
+
+
+
+---
+
+
 ### Remove Extraneous Grants
 
 > Branches Affected: master  

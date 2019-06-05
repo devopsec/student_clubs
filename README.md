@@ -1,4 +1,4 @@
-# How do we find Student Orgranized Clubs?
+# How do we find Student Organized Clubs?
 
 The student clubs project was created to answer this question.  
 Currently student are clubs hard to find and not very accessible in the Kettering University website, we aim to fix that!
